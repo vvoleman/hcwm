@@ -16,7 +16,7 @@ use ZoteroApi\Exceptions\ZoteroConnectionException;
 use ZoteroApi\Exceptions\ZoteroEndpointNotFoundException;
 
 #[AsCommand(
-    name: 'zotero:get-user',
+    name: 'app:zotero:get-user',
     description: 'Returns userID for given API key',
 )]
 class ZoteroGetUserCommand extends Command

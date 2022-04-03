@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block title %}Procházet | {{ parent() }}{% endblock %}
+{% block body %}
+    {% set LANG = "cs" %}
+    {% if collections %}
+        {% if collections["parent"] %}
+            <h1>Aktuální kolekce: {{ collections["parent"].getName(LANG) }}</h1>
+            {% set param = collections["parent"].parent ? collections["parent"].parent.buildUrl(LANG) : "" %}
+            <a href="{{ path("app_list",{"path":param}) }}">Zpět</a>
+        {% endif %}
+        {% for child in collections["children"] %}
+            <li><a href="{{ path("app_list",{"path":child.buildUrl(LANG)}) }}">{{ child.getName(LANG) }}</a></li>
+        {% endfor %}
+    {% else %}
+        <h1>Not hehe</h1>
+    {% endif %}
+{% endblock %}

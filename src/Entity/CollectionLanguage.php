@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: "App\Repository\CollectionLanguageRepository")]
 #[ORM\Table("collections_languages")]
 class CollectionLanguage
 {
@@ -36,4 +36,37 @@ class CollectionLanguage
     {
         return $this->text;
     }
+
+    /**
+     * @param Collection $collection
+     * @return CollectionLanguage
+     */
+    public function setCollection(Collection $collection): CollectionLanguage
+    {
+        $this->collection = $collection;
+        return $this;
+    }
+
+    /**
+     * @param Language $language
+     * @return CollectionLanguage
+     */
+    public function setLanguage(Language $language): CollectionLanguage
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @param string $text
+     * @return CollectionLanguage
+     */
+    public function setText(string $text): CollectionLanguage
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+
+
 }

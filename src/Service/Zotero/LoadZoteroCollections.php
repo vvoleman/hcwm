@@ -3,9 +3,16 @@
 namespace App\Service\Zotero;
 
 use App\DataContainers\Zotero\User;
+use App\Entity\Collection;
+use App\Entity\CollectionLanguage;
+use App\Exception\BadLanguageFormatException;
+use App\Exception\LanguageNotFoundException;
+use App\Repository\CollectionLanguageRepository;
+use App\Repository\CollectionRepository;
+use App\Repository\LanguageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use ZoteroApi\Endpoint\AbstractEndpoint;
 use ZoteroApi\Endpoint\Collections;
-use ZoteroApi\Endpoint\Items;
 use ZoteroApi\Exceptions\ZoteroAccessDeniedException;
 use ZoteroApi\Exceptions\ZoteroBadRequestException;
 use ZoteroApi\Exceptions\ZoteroConnectionException;
@@ -17,6 +24,22 @@ use ZoteroApi\ZoteroApi;
 
 class LoadZoteroCollections
 {
+    private PrepareLanguages $prepareLanguages;
+    private EntityManagerInterface $entityManager;
+    private CollectionRepository $collectionRepository;
+    private CollectionLanguageRepository $collectionLanguageRepository;
+
+    public function __construct(
+        CollectionRepository $collectionRepository,
+        CollectionLanguageRepository $collectionLanguageRepository,
+        EntityManagerInterface $entityManager,
+        PrepareLanguages $prepareLanguages
+    ) {
+        $this->prepareLanguages = $prepareLanguages;
+        $this->entityManager = $entityManager;
+        $this->collectionRepository = $collectionRepository;
+        $this->collectionLanguageRepository = $collectionLanguageRepository;
+    }
 
     /**
      * @throws ZoteroConnectionException
@@ -27,12 +50,64 @@ class LoadZoteroCollections
      */
     public function load(string $apiKey, AbstractSource $source, string $id = AbstractEndpoint::TOP)
     {
+        $array = $this->getCollectionsFromApi($apiKey, $source, $id);
+        $this->makeCollectionsEntities($array);
+
+        $this->entityManager->flush();
+    }
+
+    private function makeCollectionsEntities(array $collections, Collection $parent = null)
+    {
+        foreach ($collections as $col) {
+            $lang = $this->prepareLanguages->prepare($col["data"]["name"]);
+            try{
+                $collection = $this->collectionRepository->getOrCreate($col["key"]);
+            }catch (\Exception $e){
+                dd($lang);
+            }
+            $this->entityManager->persist($collection);
+
+            if(!!$parent){
+                $collection->setParent($parent);
+            }
+
+
+            foreach ($lang as $item) {
+                $colLang = $this->collectionLanguageRepository->getOrCreate($collection,$item["language"])
+                    ->setText($item["text"]);
+
+                $this->entityManager->persist($colLang);
+            }
+
+            if(sizeof($col["subcollections"] ?? []) > 0){
+                $this->makeCollectionsEntities($col["subcollections"],$collection);
+            }
+        }
+    }
+
+    /**
+     * Gets Collections from Zotero API and returns key-value array
+     *
+     * @param string $apiKey
+     * @param AbstractSource $source
+     * @param string $id
+     * @return array
+     * @throws ZoteroAccessDeniedException
+     * @throws ZoteroBadRequestException
+     * @throws ZoteroConnectionException
+     * @throws ZoteroEndpointNotFoundException
+     * @throws ZoteroInvalidChainingException
+     */
+    private function getCollectionsFromApi(string $apiKey, AbstractSource $source, string $id = AbstractEndpoint::TOP): array
+    {
         $api = new ZoteroApi($apiKey, $source);
-        $api->setEndpoint(new Collections(AbstractEndpoint::TOP));
+        $api->setEndpoint(
+            (new Collections($id))
+        );
         $api->run();
         $cols = $api->getBody();
         for ($i = 0; $i < sizeof($cols); $i++) {
-            $sub = $this->loadSubCollections($api, $cols[$i]["key"]);
+            $sub = $this->loadSubCollectionsFromApi($api, $cols[$i]["key"]);
             if (isset($sub) && sizeof($sub) > 0) {
                 $cols[$i]["subcollections"] = $sub;
             }
@@ -41,13 +116,15 @@ class LoadZoteroCollections
     }
 
     /**
+     * Loads subcollection from API
+     *
      * @throws ZoteroConnectionException
      * @throws ZoteroInvalidChainingException
      * @throws ZoteroBadRequestException
      * @throws ZoteroAccessDeniedException
      * @throws ZoteroEndpointNotFoundException
      */
-    private function loadSubCollections(ZoteroApi $api, string $id)
+    private function loadSubCollectionsFromApi(ZoteroApi $api, string $id)
     {
         $api->setEndpoint(
             (new Collections($id))
@@ -55,9 +132,9 @@ class LoadZoteroCollections
         );
         $api->run();
         $cols = $api->getBody();
-        for($i=0;$i<sizeof($cols);$i++){
-            $subs = $this->loadSubCollections($api,$cols[$i]["key"]);
-            if(isset($subs) && sizeof($subs) > 0){
+        for ($i = 0; $i < sizeof($cols); $i++) {
+            $subs = $this->loadSubCollectionsFromApi($api, $cols[$i]["key"]);
+            if (isset($subs) && sizeof($subs) > 0) {
                 $cols[$i]["subcollections"] = $subs;
             }
         }

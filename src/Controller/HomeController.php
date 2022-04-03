@@ -3,17 +3,20 @@
 namespace App\Controller;
 
 use App\Service\Zotero\LoadZoteroCollections;
+use App\Service\Zotero\LoadZoteroItems;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use ZoteroApi\Source\UsersSource;
+use ZoteroApi\ZoteroApi;
 
 class HomeController extends AbstractController
 {
 
-    #[Route("/")]
-    public function index(LoadZoteroCollections $collections)
+    #[Route("/",name:"app_home")]
+    public function index(): Response
     {
-        dd($collections->load("frKDBp5JYt9xK2jdV7tKANwn",new UsersSource(9200014)));
+        return $this->render("home.html.twig");
     }
 
 }
