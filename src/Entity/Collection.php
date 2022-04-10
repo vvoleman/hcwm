@@ -98,11 +98,12 @@ class Collection
 
     public function getName(string $language): string
     {
-        $result = array_filter($this->collectionsLanguages->toArray(), function ($colLang) use ($language) {
-            return $colLang->getLanguage()->getCode($language);
+
+        $result = $this->collectionsLanguages->filter(function($colLang) use($language){
+            return $colLang->getLanguage()->getCode() === $language;
         });
 
-        return $result[0]->getText() ?? "";
+        return $result->first()->getText() ?? "";
     }
 
     public function buildUrl(string $language): string

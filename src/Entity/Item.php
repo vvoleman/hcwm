@@ -30,7 +30,7 @@ class Item
     private \Doctrine\Common\Collections\Collection $tags;
 
     #[ORM\ManyToOne(targetEntity: "App\Entity\Collection", inversedBy: 'items')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false,onDelete: "CASCADE")]
     private ?Collection $collection;
 
     public function __construct() {

@@ -107,7 +107,7 @@ class LoadZoteroItems
         $data = $api->getBody();
 
         foreach ($data as $datum) {
-            if($datum["data"]["itemType"] !== "book") continue;
+            if($datum["data"]["itemType"] == "note") continue;
 
             $item = $this->itemRepository->getOrCreate($datum["key"]);
 

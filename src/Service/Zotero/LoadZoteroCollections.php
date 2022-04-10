@@ -29,6 +29,8 @@ class LoadZoteroCollections
     private CollectionRepository $collectionRepository;
     private CollectionLanguageRepository $collectionLanguageRepository;
 
+    private array $usedCollectionsIds;
+
     public function __construct(
         CollectionRepository $collectionRepository,
         CollectionLanguageRepository $collectionLanguageRepository,
@@ -52,6 +54,7 @@ class LoadZoteroCollections
     {
         $array = $this->getCollectionsFromApi($apiKey, $source, $id);
         $this->makeCollectionsEntities($array);
+        $this->removeMissingCollections();
 
         $this->entityManager->flush();
     }
@@ -60,6 +63,7 @@ class LoadZoteroCollections
     {
         foreach ($collections as $col) {
             $lang = $this->prepareLanguages->prepare($col["data"]["name"]);
+            $this->usedCollectionsIds[] = $col["key"];
             try{
                 $collection = $this->collectionRepository->getOrCreate($col["key"]);
             }catch (\Exception $e){
@@ -139,6 +143,13 @@ class LoadZoteroCollections
             }
         }
         return $cols;
+    }
+
+    private function removeMissingCollections(){
+        $missingCollections = $this->collectionRepository->getWhereIdNotIn($this->usedCollectionsIds);
+        foreach ($missingCollections as $missingCollection) {
+            $this->collectionRepository->remove($missingCollection,false);
+        }
     }
 
     /**

@@ -31,6 +31,14 @@ class CollectionRepository extends ServiceEntityRepository
         return $collection;
     }
 
+    public function getWhereIdNotIn(array $ids): mixed{
+        $q = $this->createQueryBuilder('q');
+        return $q->where('q.id NOT IN (:ids)')
+            ->setParameter('ids',$ids)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException
