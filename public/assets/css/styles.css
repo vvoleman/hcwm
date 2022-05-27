@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+
+:root {
+    --folder-bg: #fd9644;
+    --folder-color: black;
+    --col-size: calc(100% / 12);
+    --tag-bg: #4d4949;
+    --tag-color: white;
+    --navbar-bg: #f7b731;
+    --navbar-color: black;
+    --navbar-color-hover:black;
+    --input-label-bg:#f7b731;
+    --input-label-color:black;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.special-scroll {
+    scrollbar-width: auto;
+    scrollbar-color: #474747 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+.special-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.special-scroll::-webkit-scrollbar-track {
+    /*background: rgba(0, 0, 0, .2);*/
+    background: #ccc;
+}
+
+.special-scroll::-webkit-scrollbar-thumb {
+    background-color: #474747;
+    border-radius: 10px;
+    border: 0px solid #ffffff;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.folders .item {
+    padding: 25px 30px;
+    text-align: center;
+    background: var(--folder-bg);
+    box-shadow: 0px 0px 5px 1px rgb(155, 152, 109, .3);
+    width: calc(var(--col-size) * 2);
+    margin: 10px;
+    color: var(--folder-color);
+    text-wrap: normal;
+}
+
+.folders .item a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.folders .item:hover {
+    filter: brightness(.9);
+}
+
+.folders {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.items {
+    margin-top: 15px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+}
+
+.tag::before {
+    content: '#';
+    margin-right: 5px;
+}
+
+.tag {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--tag-color);
+    margin: 2px;
+    background: var(--tag-bg);
+}
+
+.items .item {
+    width: calc(var(--col-size) * 2.5);
+    margin: 10px;
+    padding: 15px;
+    background: #cdc3c3;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .3);
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+}
+
+.filter .input-group {
+    width: inherit;
+}
+
+.filter > div {
+    margin: 15px;
+}
+
+.navbar {
+    background-color: var(--navbar-bg);
+    font-family: 'Open Sans', serif;
+    box-shadow: 0px 1px 8px -5px rgba(0,0,0,0.75);
+}
+
+.navbar a {
+    font-weight: normal;
+    color: var(--navbar-color);
+}
+
+.navbar-brand{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+a.nav-link:not(.navbar-brand) {
+    text-decoration: none;
+    background-image: linear-gradient(var(--navbar-color), var(--navbar-color));
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: 0.1s;
+}
+
+a.nav-link:hover,
+a.nav-link:focus {
+    color: var(--navbar-color-hover);
+    text-decoration: none;
+    background-size: 100% 2px;
+}
+
+.select2-selection{
+    height: 100%;
+}
+
+.navbar-right {
+    margin-left: auto;
+}
+
+.select2-container--default .select2-selection--multiple{
+    border-radius: 0 5px 5px 0;
+}
+
+.input-group-text{
+    box-shadow: 0px 1px 8px -5px rgba(0,0,0,0.75);
+    background: var(--input-label-bg);
+    color: var(--input-label-color);
+    border-radius: 5px 0 0 5px;
+    border:none;
+}
+
+.filter-block{
+    margin-top:20px;
+}
+
+.dropdown-menu.show {
+    position: absolute;
+}
+
+.search-block{
+    display: flex;
+    justify-content: center;
+}
+
+.search-block input{
+    width: 60%;
+    border: 1px solid #ccc;
+    padding:5px;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+}
+
+.search-block .btn-search{
+    margin-left:15px;
+    width: 40px;
+    height: 40px;
+}
+
+.btn-gray{
+    border:none;
+    padding:15px;
+    border-radius: 5px;
+    background: #ddd;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+}
+
+.search-block .btn-search:hover span{
+    transform: scale(1.5);
+}
+
+.center.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: 0.1s;
+}
+
+.advanced-filter-block {
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+    padding:30px;
+    margin-top: 30px;
+    background: #eee;
+    border-radius: 5px;
+    min-height: 50px;
+}
+
+.arrow-up {
+    position: absolute;
+    margin-top:-40px;
+    left: calc(50% - 25px);
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+
+    border-bottom: 25px solid #eee;
+}
+
+.filter-select label{
+    background: #666666;
+    font-weight: bold;
+    color:white;
+    padding:5px 15px;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+}
+
+.filter-select {
+    margin-top:10px;
+    width: calc(100%/12 * 3.85);
+}
+
+.filter-select .select2-container{
+    z-index: 5;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+}
+
+.select2-container--default .select2-selection--multiple{
+    border: none;
+}
+
+.result-number {
+    margin-top:20px;
+    margin-bottom: -15px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.results-block {
+    margin-top: 20px;
+}
+
+
+
+.zotero-items .item{
+    padding: 15px;
+    width: calc(100%/12 * 3.85);
+    box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+    min-height: 50px;
+    background: #eee;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.zotero-items .item .title-line {
+    display:flex;
+    justify-content: end;
+}
+.zotero-items .item .abstract {
+    margin-top:5px;
+    background: #ddd;
+    padding: 15px;
+    height: 220px;
+    overflow-y: auto;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+}
+.zotero-items .item .title-line h3 {
+    width: 80%;
+    font-size:23px;
+}
+
+.zotero-items .item .title-line button{
+    width: 40px;
+    height: 40px;
+}
+
+.zotero-items .item .tags{
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.2);
+    padding:5px;
+    background: #ddd;
+    margin-top:10px;
+}
+
+.zotero-items .item .tags .tag {
+    display: inline-block;
+}
+
+@media only screen and (max-width: 720px) {
+    .folders .item {
+        width: calc(var(--col-size) * 4);
+    }
+    .filter-select {
+        width: 100%;
+    }
+    .zotero-items .item .title-line{
+        justify-content: space-between;
+    }
+    .zotero-items .item {
+        padding: 30px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .folders .item, .items .item {
+        width: calc(var(--col-size) * 12);
+    }
+
+    .folders, .items {
+        margin: auto;
+        flex-direction: column;
+    }
+}

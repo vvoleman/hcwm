@@ -10,12 +10,12 @@ class ItemLanguage
 {
 
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: "App\Entity\Item", cascade: ["remove"], inversedBy: "ItemLanguages")]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Item", cascade: ["remove"], inversedBy: "itemsLanguages")]
     #[ORM\JoinColumn(referencedColumnName: "id", onDelete: "CASCADE")]
     private Item $item;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: "App\Entity\Language", cascade: ["remove"], inversedBy: "ItemLanguages")]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Language", cascade: ["remove"], inversedBy: "itemsLanguages")]
     #[ORM\JoinColumn(referencedColumnName: "code", onDelete: "CASCADE")]
     private Language $language;
 

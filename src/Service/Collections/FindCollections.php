@@ -6,6 +6,7 @@ use App\Entity\Collection;
 use App\Exception\CollectionNotFoundException;
 use App\Repository\CollectionLanguageRepository;
 use App\Repository\CollectionRepository;
+use App\Service\Util\NormalizeChars;
 
 class FindCollections
 {
@@ -25,13 +26,16 @@ class FindCollections
     }
 
     /**
+     * Returns array with keys 'parent' and 'child'. Parent is Collection, child is Collection[]
+     *
      * @param string $string
-     * @return array
+     * @return array<string,mixed>
      * @throws CollectionNotFoundException
      */
     public function find(string $string): array
     {
-        $string = urldecode(str_replace("-"," ",$string));
+        $string = NormalizeChars::normalize(str_replace("-"," ",$string));
+
         if ($string == "") {
             return [
                 "parent" => null,

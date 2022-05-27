@@ -5,33 +5,44 @@
         <title>{% block title %}Zpracování odpadu{% endblock %}</title>
         {% block styles %}
             <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dripicons/2.0.0/webfont.min.css" integrity="sha512-pi7KSLdGMxSE62WWJ62B1R5/H7WNnIsj2f51MikplRt31K0uCZ1lfPSw/0Jb1flSz6Ed2YLSlox6Uulf7CaFiA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px">
+    <nav class="navbar navbar-expand-lg" style="margin-bottom: 10px">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Odpady</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="icon dripicons-menu"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("app_home") }}">Úvod</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_list') }}">List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Mapa</a>
-                    </li>
-                </ul>
+                <div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("app_home") }}">{{ "ui.pages.collections.navbar"|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_map') }}">{{ "ui.pages.map.navbar"|trans }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-nav navbar-right">
+                    <div>
+                        {{ render(controller("App\\Controller\\HomeController::getLanguageSwitcher",{url:app.request.get('_route')})) }}
+                    </div>
+                </div>
             </div>
+
         </div>
+
     </nav>
         {% block body %}{% endblock %}
         {% block scripts %}
-
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         {% endblock %}
     </body>
 </html>

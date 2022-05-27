@@ -1,0 +1,23 @@
+ui:
+    collections:
+        active_collection: "Aktuální kolekce"
+        previous_collection: "zpět"
+        filter:
+            category: "Kategorie"
+            languages: "Jazyky"
+            search_by_term: "Vyhledávání"
+            search_button: "Vyhledat"
+    items:
+        translate: "Přeložit"
+    maps:
+        undefined_option: "-- Nedefinováno --"
+        trashes_overview: "Vizualizace zpracování odpadů"
+        trashes_district_yearly: "Odpady v okrese dle let"
+    pages:
+        collections:
+            navbar: "Metodika"
+            title: "Metodika"
+        map:
+            navbar: "Přehled odpadů"
+            title: "Přehled odpadů"
+

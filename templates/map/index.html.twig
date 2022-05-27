@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}Vizualizace | {{ parent() }}{% endblock %}
+{% block styles %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/leaflet.min.css') }}">
+{% endblock %}
+{% block body %}
+	<h1 class="text-center" style="margin-bottom: 50px">{{ 'ui.maps.trashes_overview'|trans }}</h1>
+    <div class="col-md-8 mx-auto">
+		<h2>{{ 'ui.maps.trashes_district_yearly'|trans }}</h2>
+        <div>
+            <label for="selectDistrict">Výběr okresu: </label>
+            <select name="selectDistrict" id="selectDistrict">
+                <option value="">{{ 'ui.maps.undefined_option'|trans }}</option>
+                {% for key, name in allDistricts %}
+                    <option value="{{ key }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+		<canvas id="trashByDistrict" style="margin-top:10px"></canvas>
+    </div>
+	<div id="symbolMap">
+
+	</div>
+
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/charts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/leaflet.min.js') }}"></script>
+    <script>
+		const CSRF = '{{ csrf_token('get-statistics') }}'
+        const TRASH_URL = '{{ path('api_statistic_by_district') }}'
+        const DISTRICT_URL = '{{ path('api_statistic_by_district') }}'
+    </script>
+	<script src="{{ asset('assets/js/symbolMap.js') }}"></script>
+    <script src="{{ asset('assets/js/trashByDistrict.js') }}"></script>
+{% endblock %}

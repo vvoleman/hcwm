@@ -1,0 +1,26 @@
+<div class="item">
+    <b>{{ item.getName(LANG) }}</b>
+    <hr>
+    <div class="d-flex">
+        <select data-id="{{ item.id }}">
+            {% for language in allLanguages %}
+                {% if language.code != item.language.code %}
+                    <option value="{{ language.code }}">
+                        {{ language.name }}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button class="translate-text">{{ "ui.items.translate"|trans }}</button>
+    </div>
+    <hr>
+    <p class="abstract">{{ (item.abstract|u.truncate(150,"..."))|default("-") }}</p>
+    {% if item.url %}
+        <button class="btn btn-primary" href="{{ item.url }}">Otevřít</button>{% endif %}
+    <hr>
+    <div class="d-md-flex flex-wrap">
+        {% for tag in item.Tags %}
+            <div class="tag">{{ tag.text }}</div>
+        {% endfor %}
+    </div>
+</div>

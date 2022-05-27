@@ -1,0 +1,186 @@
+<html lang="cs">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Okresy</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+	<style>
+		html,body{
+            height: 100%;
+		}
+		#map{
+			width: 60vw;
+			height: 60vh;
+		}
+	</style>
+</head>
+<body>
+	<div id="map">
+		f
+	</div>
+	<select name="years" id="years">
+		<option value="2009">2009</option>
+		<option value="2010">2010</option>
+		<option value="2011">2011</option>
+		<option value="2012">2012</option>
+		<option value="2013">2013</option>
+		<option value="2014">2014</option>
+		<option value="2015">2015</option>
+		<option value="2016">2016</option>
+		<option value="2017">2017</option>
+		<option value="2018">2018</option>
+		<option value="2019">2019</option>
+	</select>
+	<button id="yearsChange">Změnit</button>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="leaflet-canvasicon.js"></script>
+	<script type="text/javascript" src="leaflet-piechart_og.js"></script>
+	<script>
+		let layers = {};
+		let activeLayer;
+		let markers;
+
+		async function getDistricts(){
+			const response = await fetch('data/districts_output.json')
+			return await response.json()
+		}
+		async function loadDistrict(key){
+			const response = await fetch(`data/${key}.geojson`);
+			return await response.json()
+		}
+		async function loadAllDistricts(){
+			const response = await fetch('data/regions_ready.geojson')
+			return await response.json()
+		}
+		function renderPieCharts(map, data, year){
+			let coords;
+			let trashes;
+			const emptyCanvas = document.createElement('canvas')
+			const markers = []
+			for (const region of data) {
+				coords = region['properties']['city']['coords'];
+				coords = [coords[1], coords[0]]
+
+				const temp = region.properties.trashes
+				const keys = Object.keys(temp)
+				trashes = keys.map((key)=>{
+					return {
+						name: key,
+						value: temp[key][year]
+					}
+				})
+
+				console.log(trashes)
+
+				markers.push(L.piechartMarker(
+					L.latLng(coords),
+					{
+						data: trashes
+					}
+				))
+			}
+
+			return markers
+		}
+		async function processData(map, year){
+			const data = await loadAllDistricts()
+
+			// Display all regions
+			L.geoJSON(data,{
+				onEachFeature: function (feature, layer) {
+					layer.on('mouseover', function () {
+						this.setStyle({
+							'fillColor': stringToColor(Math.random()*1000)
+						});
+					});
+				}
+			}).addTo(map)
+			const sizes = [
+				10, 20, 30, 40, 50, 60, 70, 80, 130, 180, 230, 280, 330, 380, 430, 480, 530, 580
+			]
+			map.on('zoom',(e)=>{
+				// Přepočítej velikosti
+				const zoom = e.sourceTarget.getZoom()
+				console.log(zoom)
+				const year = select.value;
+				const marks = markers[year]
+				var icon = marks[0].options.icon;
+				let size = sizes[zoom-1];
+				icon.options.iconAnchor = [size/2, size/2]
+				icon.options.iconSize = [sizes[zoom-1], sizes[zoom]];
+				for (const marker of marks) {
+
+					marker.setIcon(icon);
+				}
+			})
+
+			// Create pie charts
+			let tempMarkers;
+			markers = {}
+			for (let year = 2009; year <= 2019; year++) {
+				tempMarkers = renderPieCharts(map, data, year)
+				markers[year] = tempMarkers
+				layers[year] = L.layerGroup(tempMarkers)
+			}
+
+			switchLayers(map, select.value);
+		}
+		function simpleHash (str, seed=0) {
+			let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+			for (let i = 0, ch; i < str.length; i++) {
+				ch = str.charCodeAt(i);
+				h1 = Math.imul(h1 ^ ch, 2654435761);
+				h2 = Math.imul(h2 ^ ch, 1597334677);
+			}
+			h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+			h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+			return 4294967296 * (2097151 & h2) + (h1>>>0);
+		}
+		function switchLayers(map,year){
+			if(year === activeLayer) return;
+			if(activeLayer !== undefined){
+				map.removeLayer(layers[activeLayer])
+			}
+			map.addLayer(layers[year])
+			activeLayer = year
+		}
+		function stringToColor(str) {
+			const hash = simpleHash(str)
+
+			let color = '#';
+			let i;
+			for (i = 0; i < 3; i++) {
+				const value = (hash >> (i * 8)) & 0xFF;
+				color += ('00' + value.toString(16)).substr(-2);
+			}
+			return color;
+		}
+	</script>
+	<script>
+		const select = document.getElementById('years');
+
+		const map = L.map('map',{
+			dragging: true
+		}).setView([49.743876792996865, 15.339122571121992], 7);
+
+		processData(map, 2009)
+
+		const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1
+		}).addTo(map);
+
+		document.getElementById('yearsChange').addEventListener('click', (e)=>{
+			switchLayers(map, select.value)
+		})
+
+	</script>
+</body>
+</html>

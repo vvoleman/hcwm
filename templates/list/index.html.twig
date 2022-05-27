@@ -1,17 +1,49 @@
 {% extends "base.html.twig" %}
-{% block title %}Procházet | {{ parent() }}{% endblock %}
+{% block title %}{{ "ui.pages.collections.title"|trans }} | {{ parent() }}{% endblock %}
 {% block body %}
-    {% set LANG = "en" %}
-    {% if collections %}
-        {% if collections["parent"] %}
-            <h1>Aktuální kolekce: {{ collections["parent"].getName(LANG) }}</h1>
-            {% set param = collections["parent"].parent ? collections["parent"].parent.buildUrl(LANG) : "" %}
-            <a href="{{ path("app_list",{"path":param}) }}">Zpět</a>
-        {% endif %}
-        {% for child in collections["children"] %}
-            <li><a href="{{ path("app_list",{"path":child.buildUrl(LANG)}) }}">{{ child.getName(LANG) }}</a></li>
-        {% endfor %}
-    {% else %}
-        <h1>Not hehe</h1>
+    {% set LANG = app.request.locale %}
+
+    {# Displays current collection with go back button #}
+    {% if filter.parent %}
+        <h1>{{ "ui.collections.active_collection"|trans }}: {{ filter.parent.getName(LANG) }}</h1>
+        {% set param = filter.parent.parent ? filter.parent.parent.buildUrl(LANG) : "" %}
+        <a href="{{ path("app_home",{"path":param}) }}">{{ "ui.collections.previous_collection"|trans }}</a>
     {% endif %}
+
+    {# Filters are set, offers to clean them #}
+    {% if filter.isDirty %}
+        {% set path = filter.parent ? filter.parent.buildUrl(LANG) : "" %}
+        <h3>Jsou nastaveny filtry, <a href="{{ path("app_home",{"path":path}) }}">zrušit</a></h3>
+    {% endif %}
+
+    {# Displays filter #}
+    {{ filter.render() | raw }}
+
+    <div class="col-md-10 mx-auto">
+
+        {# Displays collections #}
+        <div class="folders">
+            {% for child in filter.collections %}
+                <div class="item"><a
+                            href="{{ path("app_home",{"path":child.buildUrl(LANG)}) }}">{{ child.getName(LANG) }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Displays items #}
+        <div class="items">
+            {% for item in filter.items %}
+                {% include "partials/_item_card.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script>
+        const AJAX_URL = "{{ path('api_translate_get') }}"
+        const _CSRF = "{{ csrf_token('translate_item') }}"
+    </script>
+    <script src="{{ asset('assets/js/translate.js') }}"></script>
 {% endblock %}

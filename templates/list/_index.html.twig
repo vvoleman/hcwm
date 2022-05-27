@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ "ui.pages.collections.title"|trans }} | {{ parent() }}{% endblock %}
+{% block body %}
+    <div class="filter-block col-md-10 col-11 mx-auto">
+        <div class="search-block">
+            <input type="text">
+            <button class="btn-search btn-gray">
+                <span class="center icon dripicons-search"></span>
+            </button>
+        </div>
+        <div class="advanced-filter-separator">
+            <span>Rozšířené vyhledávání</span>
+            <button class="center icon dripicons-chevron-down btn-gray"></button>
+        </div>
+        <div class="advanced-filter-block col-md-10 mx-auto">
+            <div class="arrow-up"></div>
+            <div class="d-md-flex justify-content-between flex-wrap">
+                <div class="filter-select">
+                    <label for="">Kategorie</label>
+                    <select name="" id="" multiple class="form-select select2-multiple">
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                        <option value="">Aaa</option>
+                    </select>
+                </div>
+                <div class="filter-select">
+                    <label for="">Kategorie</label>
+                    <select name="" id="" multiple class="form-select select2-multiple">
+                        <option value="">Aaa</option>
+                    </select>
+                </div>
+                <div class="filter-select">
+                    <label for="">Kategorie</label>
+                    <select name="" id="" multiple class="form-select select2-multiple">
+                        <option value="">Aaa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 mx-auto result-number">
+                <span><b>0</b> výsledků</span>
+            </div>
+        </div>
+    </div>
+    <div class="results-block col-md-10 mx-auto">
+        <div class="breadcrumbs">
+            <a href="">Vše</a> &raquo; <a href="">Test</a> &raquo; aaa
+        </div>
+
+        <div class="zotero-items d-md-flex">
+            <div class="item">
+                <div class="title-line">
+                    <h3>
+                        Hobit aneb cesta tam a zase zpátky
+                    </h3>
+                    <button class="btn-gray center icon dripicons-map"></button>
+                </div>
+                <div class="abstract special-scroll">
+                    <p>Hobit aneb Cesta tam a zase zpátky je fantasy román anglického spisovatele J. R. R. Tolkiena,
+                        který byl poprvé vydaný 21. září 1937.</p>
+                </div>
+                <div class="tags">
+                    <div class="tag">mama</div>
+                    <div class="tag">i</div>
+                    <div class="tag">just</div>
+                    <div class="tag">killed</div>
+                    <div class="tag">a</div>
+                    <div class="tag">man</div>
+
+                </div>
+            </div>
+            <div class="item">
+                <div class="title-line">
+                    <h3>
+                        Hobit aneb cesta tam a zase zpátky
+                    </h3>
+                    <button class="btn-gray center icon dripicons-map"></button>
+                </div>
+                <div class="abstract special-scroll">
+                    <p>Hobit aneb Cesta tam a zase zpátky je fantasy román anglického spisovatele J. R. R. Tolkiena,
+                        který byl poprvé vydaný 21. září 1937. Vznikl původně jako vedlejší produkt autorem
+                        vytvářených legend fiktivní země Středozemě.</p>
+                </div>
+                <div class="tags">
+                    <div class="tag">mama</div>
+                    <div class="tag">i</div>
+                    <div class="tag">just</div>
+                    <div class="tag">killed</div>
+                    <div class="tag">a</div>
+                    <div class="tag">man</div>
+
+                </div>
+            </div>
+            <div class="item">
+                <div class="title-line">
+                    <h3>
+                        Hobit aneb cesta tam a zase zpátky
+                    </h3>
+                    <button class="btn-gray center icon dripicons-map"></button>
+                </div>
+                <div class="abstract special-scroll">
+                    <p>Hobit aneb Cesta tam a zase zpátky je fantasy román anglického spisovatele J. R. R. Tolkiena,
+                        který byl poprvé vydaný 21. září 1937. Vznikl původně jako vedlejší produkt autorem
+                        vytvářených legend fiktivní země Středozemě.</p>
+                </div>
+                <div class="tags">
+                    <div class="tag">mama</div>
+                    <div class="tag">i</div>
+                    <div class="tag">just</div>
+                    <div class="tag">killed</div>
+                    <div class="tag">a</div>
+                    <div class="tag">man</div>
+
+                </div>
+            </div>
+            <div class="item">
+                <div class="title-line">
+                    <h3>
+                        Hobit aneb cesta tam a zase zpátky
+                    </h3>
+                    <button class="btn-gray center icon dripicons-map"></button>
+                </div>
+                <div class="abstract special-scroll">
+                    <p>Hobit aneb Cesta tam a zase zpátky je fantasy román anglického spisovatele J. R. R. Tolkiena,
+                        který byl poprvé vydaný 21. září 1937. Vznikl původně jako vedlejší produkt autorem
+                        vytvářených legend fiktivní země Středozemě.</p>
+                </div>
+                <div class="tags">
+                    <div class="tag">mama</div>
+                    <div class="tag">i</div>
+                    <div class="tag">just</div>
+                    <div class="tag">killed</div>
+                    <div class="tag">a</div>
+                    <div class="tag">man</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script>
+		const AJAX_URL = "{{ path('api_translate_get') }}"
+		const _CSRF = "{{ csrf_token('translate_item') }}"
+    </script>
+    <script src="{{ asset('assets/js/translate.js') }}"></script>
+{% endblock %}

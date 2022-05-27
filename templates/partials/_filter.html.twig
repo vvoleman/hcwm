@@ -1,0 +1,34 @@
+<form method="get">
+    <div class="filter">
+        <div class="mb-3 input-group col-md-3">
+            <label for="tags" class="input-group-text">{{ "ui.collections.filter.category"|trans }}:</label>
+            <select class="form-select select2-multiple" multiple name="tags[]" id="tags" {% if not tags %}disabled{% endif %}>
+                <option value="">-- Nedefinováno --</option>
+                {% for tag in tags.all %}
+                    <option value="{{ tag.id }}"
+                            {% if tag.id in tags.selected %}selected{% endif %}>
+                        {{ tag.text|capitalize }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3 input-group">
+            <label for="languages" class="input-group-text">{{ "ui.collections.filter.languages"|trans }}:</label>
+            <select class="col-md-3 form-select select2-multiple-flags" multiple name="languages[]" id="languages"
+                    {% if not languages %}disabled{% endif %}>
+                {% for language in languages.all %}
+                    <option data-name="{{ language.name }}" data-flag="{{ language.flag }}" value="{{ language.code }}"
+                            {% if language.code in languages.selected %}selected{% endif %}>
+                        {{ language.name|capitalize }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="query">{{ "ui.collections.filter.search_by_term"|trans }}: </label>
+            <input type="query" name="query" id="query" value="{{ query }}">
+            <input type="submit" value="{{ "ui.collections.filter.search_button"|trans }}">
+        </div>
+
+    </div>
+</form>

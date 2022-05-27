@@ -5,17 +5,3 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
-
-app_map:
-    path: /map
-    controller: App\Controller\MapController::index
-
-app_reload:
-    path: /reload
-    controller: App\Controller\HomeController::reload
-
-app_home:
-    path: /{path}
-    controller: App\Controller\HomeController::index
-    requirements:
-        path: .+

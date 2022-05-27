@@ -1,0 +1,17 @@
+[19-Apr-2022 10:29:25 Europe/Prague] Xdebug: [Config] The setting 'xdebug.remote_autostart' has been renamed, see the upgrading guide at https://xdebug.org/docs/upgrade_guide#changed-xdebug.remote_autostart (See: https://xdebug.org/docs/errors#CFG-C-CHANGED)
+[19-Apr-2022 10:29:25 Europe/Prague] Xdebug: [Config] The setting 'xdebug.remote_port' has been renamed, see the upgrading guide at https://xdebug.org/docs/upgrade_guide#changed-xdebug.remote_port (See: https://xdebug.org/docs/errors#CFG-C-CHANGED)
+[19-Apr-2022 09:19:08 UTC] 2022-04-19T09:19:08+00:00 [critical] Uncaught Error: syntax error, unexpected token "return"
+[19-Apr-2022 09:19:16 UTC] 2022-04-19T09:19:16+00:00 [info] User Deprecated: The "Symfony\Bridge\Doctrine\Logger\DbalLogger" class implements "Doctrine\DBAL\Logging\SQLLogger" that is deprecated Use {@see \Doctrine\DBAL\Logging\Middleware} or implement {@see \Doctrine\DBAL\Driver\Middleware} instead.
+[19-Apr-2022 09:19:26 UTC] [critical] Error thrown while running command "doctrine:migrations:migrate". Message: "An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`odpady`.`#sql-1d95_15`, CONSTRAINT `FK_E11EE94D82F1BAF4` FOREIGN KEY (`language_id`) REFERENCES `languages` (`code`))"
+
+[19-Apr-2022 09:26:25 UTC] 2022-04-19T09:26:25+00:00 [info] User Deprecated: The "Symfony\Bridge\Doctrine\Logger\DbalLogger" class implements "Doctrine\DBAL\Logging\SQLLogger" that is deprecated Use {@see \Doctrine\DBAL\Logging\Middleware} or implement {@see \Doctrine\DBAL\Driver\Middleware} instead.
+[19-Apr-2022 09:26:46 UTC] [critical] Error thrown while running command "app:zotero:load frKDBp5JYt9xK2jdV7tKANwn 9200014". Message: "Typed property App\Entity\Item::$tags must not be accessed before initialization"
+
+[19-Apr-2022 09:26:46 UTC] 2022-04-19T09:26:46+00:00 [critical] Uncaught Error: Typed property App\Entity\Item::$tags must not be accessed before initialization
+[23-May-2022 19:06:01 UTC] [critical] Error thrown while running command "'doctrine:migrations:migrat'". Message: "An exception occurred while executing a query: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '0000-00-00 00:00:00' for column 'date_added' at row 1"
+
+[23-May-2022 19:06:29 UTC] [critical] Error thrown while running command "'doctrine:migrations:migrat'". Message: "An exception occurred while executing a query: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '0000-00-00 00:00:00' for column 'date_added' at row 1"
+
+[23-May-2022 19:10:35 UTC] [critical] Error thrown while running command "app:zotero:load frKDBp5JYt9xK2jdV7tKANwn 9200014". Message: "App\Entity\Item::setDateAdded(): Argument #1 ($dateAdded) must be of type DateTimeImmutable, string given, called in /home/themulti/PHP/odpady/src/Service/Zotero/LoadZoteroItems.php on line 122"
+
+[23-May-2022 19:10:35 UTC] 2022-05-23T19:10:35+00:00 [critical] Uncaught Error: App\Entity\Item::setDateAdded(): Argument #1 ($dateAdded) must be of type DateTimeImmutable, string given, called in /home/themulti/PHP/odpady/src/Service/Zotero/LoadZoteroItems.php on line 122

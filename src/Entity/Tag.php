@@ -16,7 +16,7 @@ class Tag
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\ManyToMany(targetEntity: "App\Entity\Item", inversedBy: "tags")]
+    #[ORM\ManyToMany(targetEntity: "App\Entity\Item", mappedBy: "tags")]
     private Collection $items;
 
     #[ORM\Column(type: "string",unique: true)]

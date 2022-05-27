@@ -1,0 +1,23 @@
+ui:
+    collections:
+        active_collection: "Current collection"
+        previous_collection: "back"
+        filter:
+            category: "Category"
+            languages: "Languages"
+            search_by_term: "Search by term"
+            search_button: "Search"
+    items:
+        translate: "Translate"
+    maps:
+        undefined_option: "-- Not defined --"
+        trashes_overview: "Trash overview"
+        trashes_district_yearly: "Trashes in district yearly"
+    pages:
+        collections:
+            navbar: "Methodics"
+            title: "Methodics"
+        map:
+            navbar: "Overview"
+            title: "Overview"
+

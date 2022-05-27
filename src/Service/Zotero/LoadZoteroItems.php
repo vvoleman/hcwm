@@ -9,6 +9,7 @@ use App\Entity\Tag;
 use App\Repository\CollectionRepository;
 use App\Repository\ItemLanguageRepository;
 use App\Repository\ItemRepository;
+use App\Repository\LanguageRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ZoteroApi\Endpoint\AbstractEndpoint;
@@ -36,10 +37,12 @@ class LoadZoteroItems
 
     /** @var array<string,Tag>  */
     private array $tags = [];
+	private LanguageRepository $languageRepository;
 
-    public function __construct(
+	public function __construct(
         CollectionRepository $collectionRepository,
         ItemLanguageRepository $itemLanguageRepository,
+		LanguageRepository $languageRepository,
         TagRepository $tagRepository,
         ItemRepository $itemRepository,
         EntityManagerInterface $entityManager,
@@ -51,7 +54,8 @@ class LoadZoteroItems
         $this->prepareLanguages = $prepareLanguages;
         $this->itemLanguageRepository = $itemLanguageRepository;
         $this->tagRepository = $tagRepository;
-    }
+		$this->languageRepository = $languageRepository;
+	}
 
     /**
      * @throws \App\Exception\LanguageNotFoundException
@@ -111,7 +115,23 @@ class LoadZoteroItems
 
             $item = $this->itemRepository->getOrCreate($datum["key"]);
 
+			$item->setAbstract($datum["data"]["abstractNote"]);
+
             $item->setUrl($datum["data"]["url"] ?? "");
+
+			$item->setDateAdded(new \DateTimeImmutable($datum['data']['dateAdded']));
+
+			$item->setDateModified(new \DateTimeImmutable($datum['data']['dateModified']));
+
+			if(!isset($datum["data"]["language"])){
+				$datum["data"]["language"] = PrepareLanguages::DEFAULT_LANGUAGE;
+			}
+			$lang = $this->languageRepository->find($datum["data"]["language"]);
+			if(!$lang){
+				$lang = $this->languageRepository->find(PrepareLanguages::DEFAULT_LANGUAGE);
+			}
+
+			$item->setLanguage($lang);
 
             // Get languages for title
             $languages = $this->prepareLanguages->prepare($datum["data"]["title"]);
@@ -144,7 +164,7 @@ class LoadZoteroItems
             }else{
                 $tag = $this->tags[$tagItem["tag"]];
             }
-            $tag->addItem($item);
+            $item->addTag($tag);
 
         }
     }

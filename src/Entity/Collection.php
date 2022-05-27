@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Service\Util\NormalizeChars;
+use App\Service\Zotero\PrepareLanguages;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections as Common;
@@ -103,16 +105,28 @@ class Collection
             return $colLang->getLanguage()->getCode() === $language;
         });
 
+        if(count($result) === 0){
+            if($language === PrepareLanguages::DEFAULT_LANGUAGE){
+                if(count($this->collectionsLanguages) === 0){
+                    return "-";
+                }else{
+                    return $this->collectionsLanguages->first()->getText();
+                }
+            }else{
+                return $this->getName(PrepareLanguages::DEFAULT_LANGUAGE);
+            }
+        }
+
         return $result->first()->getText() ?? "";
     }
 
     public function buildUrl(string $language): string
     {
         if (!isset($this->parent)) {
-            return urlencode(str_replace(" ","-",strtolower($this->getName($language))));
+            return NormalizeChars::normalize(str_replace(" ","-",strtolower($this->getName($language))));
         }
         $str = $this->parent->buildUrl($language);
-        $str.= "/".urlencode(str_replace(" ","-",strtolower($this->getName($language))));
+        $str.= "/".NormalizeChars::normalize(str_replace(" ","-",strtolower($this->getName($language))));
 
         return $str;
     }
@@ -168,5 +182,38 @@ class Collection
 
         return $this;
     }
+
+	/**
+	 * @return Tag[]
+	 */
+	public function getTags(): array{
+		$result = [];
+		/** @var Item $item */
+		foreach ($this->items as $item) {
+			foreach ($item->getTags() as $tag) {
+				if(!array_key_exists($tag->getId(),$result)){
+					$result[$tag->getId()] = $tag;
+				}
+			}
+		}
+		return array_values($result);
+	}
+
+	/**
+	 * @return Language[]
+	 */
+	public function getItemsLanguages(): array{
+		$result = [];
+
+		/** @var Item $item */
+		foreach ($this->items as $item) {
+			$languages = $item->getLanguages();
+			foreach ($languages as $language) {
+				$result[$language->getCode()] = $language;
+			}
+		}
+
+		return array_values($result);
+	}
 
 }
