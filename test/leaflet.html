@@ -52,7 +52,7 @@
 			return await response.json()
 		}
 		async function loadAllDistricts(){
-			const response = await fetch('data/regions_ready.geojson')
+			const response = await fetch('data/single.geojson')
 			return await response.json()
 		}
 		function renderPieCharts(map, data, year){
@@ -90,13 +90,6 @@
 
 			// Display all regions
 			L.geoJSON(data,{
-				onEachFeature: function (feature, layer) {
-					layer.on('mouseover', function () {
-						this.setStyle({
-							'fillColor': stringToColor(Math.random()*1000)
-						});
-					});
-				}
 			}).addTo(map)
 			const sizes = [
 				10, 20, 30, 40, 50, 60, 70, 80, 130, 180, 230, 280, 330, 380, 430, 480, 530, 580
@@ -116,7 +109,7 @@
 					marker.setIcon(icon);
 				}
 			})
-
+return;
 			// Create pie charts
 			let tempMarkers;
 			markers = {}

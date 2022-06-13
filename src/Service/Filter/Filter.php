@@ -33,6 +33,8 @@ class Filter
 			$qb = $modifier->process($qb);
 		}
 
+		//dd($qb->getQuery()->getSQL(), $qb->getParameters());
+
 		return $qb
 			->getQuery()
 			->getResult();

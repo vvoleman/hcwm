@@ -21,12 +21,16 @@ class LanguageFilterModifier implements IFilterModifier
 
 	public function process(QueryBuilder $builder): QueryBuilder
 	{
+		if(!in_array('il', $builder->getAllAliases())){
+			$builder->innerJoin('i.itemsLanguages', 'il');
+		}
 		return $builder
-			->innerJoin('i.itemsLanguages', 'il')
-			->andWhere('il.language IN (:languages)')
-			->andHaving('COUNT(il.language) = :count')
+			->andWhere(
+				$builder->expr()->in('il.language', $this->languages)
+			)
+			//->andWhere('il.language IN (:languages)')
+			->andHaving('COUNT(il.language) = :countLang')
 			->groupBy('i.id')
-			->setParameter('languages', $this->languages)
-			->setParameter("count",count($this->languages));
+			->setParameter("countLang",count($this->languages));
 	}
 }

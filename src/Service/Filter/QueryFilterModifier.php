@@ -17,7 +17,10 @@ class QueryFilterModifier implements IFilterModifier
 
 	public function process(QueryBuilder $builder): QueryBuilder
 	{
-		return $builder->innerJoin('i.itemsLanguages', 'il')
+		if(!in_array('il', $builder->getAllAliases())){
+			$builder->innerJoin('i.itemsLanguages', 'il');
+		}
+		return $builder
 			->andWhere('il.text LIKE :query')
 			->setParameter("query","%$this->query%");
 	}

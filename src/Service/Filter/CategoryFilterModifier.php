@@ -22,8 +22,8 @@ class CategoryFilterModifier implements IFilterModifier
 			->andWhere(
 				$builder->expr()->in('t.id', $this->categories)
 			)
-			->andHaving('COUNT(t.id) = :count')
+			->andHaving('COUNT(t.id) = :countCategory')
 			->groupBy('i.id')
-			->setParameter('count',count($this->categories));
+			->setParameter('countCategory',count($this->categories));
 	}
 }
