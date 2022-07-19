@@ -24,7 +24,7 @@ class FindData
 			$json = json_decode($data, true);
 
 			if($json === null && json_last_error() !== JSON_ERROR_NONE){
-				throw new StatisticException('Invalid data format of %s',realpath($expectedPath));
+				throw new StatisticException(sprintf('Invalid data format of %s',realpath($expectedPath)));
 			}
 
 			if(!isset($json[$id])){
@@ -52,7 +52,17 @@ class FindData
 	 */
 	public function getRegionsData(): array
 	{
-		$expectedPath = sprintf('%s/%s/regions_ready.geojson',self::DATA_FOLDER, "regionsData");
+		$expectedPath = sprintf('%s/%s/regions_aggregated.geojson',self::DATA_FOLDER, "regionsData");
+		return $this->loadData($expectedPath);
+	}
+
+	/**
+	 * @throws StatisticException
+	 */
+	public function getRegionDetails(string $id): array
+	{
+		$expectedPath = sprintf('%s/byRegion/shorten_50/%s.geojson',self::DATA_FOLDER, $id);
+
 		return $this->loadData($expectedPath);
 	}
 
@@ -63,7 +73,7 @@ class FindData
 			$json = json_decode($data, true);
 
 			if($json === null && json_last_error() !== JSON_ERROR_NONE){
-				throw new StatisticException('Invalid data format of %s',realpath($path));
+				throw new StatisticException(sprintf('Invalid data format of %s',realpath($path)));
 			}
 
 			return $json;

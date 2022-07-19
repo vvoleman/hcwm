@@ -53,4 +53,24 @@ class StatisticController extends BaseApiController
 		return $this->send($data);
 	}
 
+	#[Route('/getRegionDetails', name: '_region_details')]
+	public function getRegionDetails(FindData $findData): JsonResponse
+	{
+		$required = ['region_id'=>true];
+
+		try {
+			$params = $this->getParams($required);
+		} catch (MissingParameterException $e){
+			return $this->error($e->getMessage(),Response::HTTP_UNPROCESSABLE_ENTITY);
+		}
+
+		try {
+			$data = $findData->getRegionDetails($params['region_id']);
+
+			return $this->send($data);
+		} catch (StatisticException $e) {
+			return $this->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }
