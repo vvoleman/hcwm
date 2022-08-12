@@ -41,6 +41,33 @@ class StatisticController extends BaseApiController
 		return $this->send($data);
 	}
 
+	#[Route("/getTrashByDistrict",name:"by_district",methods: ["GET"])]
+	public function getByRegion(FindData $findData): Response{
+		$required = ['district_id'=>true];
+
+		try {
+			$params = $this->getParams($required);
+		} catch (MissingParameterException $e){
+			return $this->error($e->getMessage(),Response::HTTP_UNPROCESSABLE_ENTITY);
+		}
+
+		if(!is_numeric($params['district_id'])){
+			return $this->error('District id has to be integer!');
+		}
+
+		try {
+			$regions = $findData->getRegionsData();
+			dump($regions);
+			$data = $findData->getRegionsData($params['district_id']);
+		} catch (StatisticException $e) {
+			return $this->error($e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
+
+
+
+		return $this->send($data);
+	}
+
 	#[Route('/getRegionsData', name:'_regions_data')]
 	public function getRegionsData(FindData $findData): JsonResponse
 	{
@@ -73,4 +100,15 @@ class StatisticController extends BaseApiController
 		}
 	}
 
+	#[Route('/getCountryData', name: '_country_data')]
+	public function getCountryData(FindData $findData): JsonResponse
+	{
+		try {
+			$data = $findData->getCountryData();
+		} catch (StatisticException $e) {
+			return $this->error($e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
+
+		return $this->send($data);
+	}
 }

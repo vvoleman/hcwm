@@ -19,6 +19,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+        bind:
+            $isDebug: '%kernel.debug%'
     App\Service\Translation\DeepL\DeepL:
         arguments:
             $apiKey: '%env(DEEPL_API_KEY)%'

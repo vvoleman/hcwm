@@ -66,6 +66,18 @@ class FindData
 		return $this->loadData($expectedPath);
 	}
 
+	/**
+	 * @throws StatisticException
+	 */
+	public function getCountryData(): array
+	{
+		$expectedPath = sprintf('%s/countryData/country_ready.json',self::DATA_FOLDER);
+
+		return $this->loadData($expectedPath);
+	}
+
+
+
 	private function loadData(string $path): array
 	{
 		if (file_exists($path)){

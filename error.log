@@ -15,3 +15,16 @@
 [23-May-2022 19:10:35 UTC] [critical] Error thrown while running command "app:zotero:load frKDBp5JYt9xK2jdV7tKANwn 9200014". Message: "App\Entity\Item::setDateAdded(): Argument #1 ($dateAdded) must be of type DateTimeImmutable, string given, called in /home/themulti/PHP/odpady/src/Service/Zotero/LoadZoteroItems.php on line 122"
 
 [23-May-2022 19:10:35 UTC] 2022-05-23T19:10:35+00:00 [critical] Uncaught Error: App\Entity\Item::setDateAdded(): Argument #1 ($dateAdded) must be of type DateTimeImmutable, string given, called in /home/themulti/PHP/odpady/src/Service/Zotero/LoadZoteroItems.php on line 122
+[10-Aug-2022 19:57:11 UTC] 2022-08-10T19:57:11+00:00 [critical] Uncaught Error: Too few arguments to function App\Service\Statistic\FindData::getRegionDetails(), 0 passed in /var/www/html/src/Controller/Api/GeographyController.php on line 44 and exactly 1 expected
+[10-Aug-2022 20:07:41 UTC] 2022-08-10T20:07:41+00:00 [critical] Uncaught Error: array_keys(): Argument #1 ($array) must be of type array, stdClass given
+[10-Aug-2022 20:53:44 UTC] 2022-08-10T20:53:44+00:00 [critical] Uncaught Error: syntax error, unexpected token ")", expecting variable or "{" or "$"
+[11-Aug-2022 17:27:05 UTC] 2022-08-11T17:27:05+00:00 [critical] Uncaught Exception: Invalid service "App\Command\ZoteroGetUserCommand": method "__construct()" has no argument named "$isDebug". Check your service definition.
+[11-Aug-2022 17:28:14 UTC] 2022-08-11T17:28:14+00:00 [critical] Uncaught Exception: Invalid service id: "App\Controller\" in /var/www/html/config/services.yaml (which is being imported from "/var/www/html/src/Kernel.php").
+[11-Aug-2022 17:45:41 UTC] 2022-08-11T17:45:41+00:00 [critical] Uncaught Error: array_key_exists() expects exactly 2 arguments, 1 given
+[11-Aug-2022 18:10:49 UTC] 2022-08-11T18:10:49+00:00 [critical] Uncaught Error: Call to a member function getTrashes() on null
+[11-Aug-2022 18:18:25 UTC] 2022-08-11T18:18:24+00:00 [critical] Uncaught Error: App\Controller\Api\Geography\RegionController::get(): Return value must be of type Symfony\Component\HttpFoundation\JsonResponse, none returned
+[11-Aug-2022 18:28:03 UTC] 2022-08-11T18:28:03+00:00 [critical] Uncaught Error: syntax error, unexpected token "}", expecting ";"
+[11-Aug-2022 18:28:09 UTC] 2022-08-11T18:28:09+00:00 [critical] Uncaught Error: App\Controller\Api\Geography\RegionController::get(): Return value must be of type Symfony\Component\HttpFoundation\JsonResponse, none returned
+[11-Aug-2022 18:28:33 UTC] 2022-08-11T18:28:33+00:00 [critical] Uncaught Error: App\Controller\Api\Geography\RegionController::get(): Return value must be of type Symfony\Component\HttpFoundation\JsonResponse, array returned
+[12-Aug-2022 08:46:46 UTC] 2022-08-12T08:46:46+00:00 [critical] Uncaught Error: Undefined constant App\Service\Geojson\Region\AllDistrictsBordersRegionDataComposer::BORDERS_FOLDER
+[12-Aug-2022 08:47:05 UTC] 2022-08-12T08:47:05+00:00 [critical] Uncaught Error: Undefined constant App\Service\Geojson\Region\AllDistrictsBordersRegionDataComposer::BORDERS_FOLDER
