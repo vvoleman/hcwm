@@ -41,6 +41,11 @@ class SpecificCountryDataComposer extends AbstractDataComposer
 			$regions[] = [
 				'region_id' => $region->getId(),
 				'name' => $region->getName(),
+				'parent_id' => $region->getCountry()->getId(),
+				'coords' => [
+					'latitude' => $region->getLatitude(),
+					'longitude' => $region->getLongitude()
+				]
 			];
 		}
 

@@ -53,6 +53,7 @@ class LoadZoteroCollections
     public function load(string $apiKey, AbstractSource $source, string $id = AbstractEndpoint::TOP)
     {
         $array = $this->getCollectionsFromApi($apiKey, $source, $id);
+		dd($array);
         $this->makeCollectionsEntities($array);
         $this->removeMissingCollections();
 
@@ -110,6 +111,7 @@ class LoadZoteroCollections
         );
         $api->run();
         $cols = $api->getBody();
+		dd($cols);
         for ($i = 0; $i < sizeof($cols); $i++) {
             $sub = $this->loadSubCollectionsFromApi($api, $cols[$i]["key"]);
             if (isset($sub) && sizeof($sub) > 0) {

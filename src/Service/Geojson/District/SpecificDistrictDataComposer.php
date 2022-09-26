@@ -33,7 +33,7 @@ class SpecificDistrictDataComposer extends AbstractDataComposer
 			'name' => $district->getName(),
 			'region' => $district->getRegion()->getId(),
 			'trashes' => $trashes->getFormattedArray(),
-			'center' => [
+			'coords' => [
 				'latitude' => $district->getLatitude(),
 				'longitude' => $district->getLongitude()
 			]

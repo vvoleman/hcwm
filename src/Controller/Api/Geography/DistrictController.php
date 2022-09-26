@@ -7,6 +7,7 @@ use App\Repository\Geography\DistrictRepository;
 use App\Repository\Geography\RegionRepository;
 use App\Service\Geojson\AbstractDataComposer;
 use App\Service\Geojson\District\DistrictBordersDataComposer;
+use App\Service\Geojson\District\MultipleDistrictsDataComposer;
 use App\Service\Geojson\District\SpecificDistrictDataComposer;
 use App\Service\Geojson\Region\AllDistrictsBordersRegionDataComposer;
 use Exception;
@@ -24,6 +25,18 @@ class DistrictController extends BaseApiController
 	public function allBorders(DistrictBordersDataComposer $composer): JsonResponse
 	{
 		return $this->handleReturn($composer);
+	}
+
+	#[Route('/parent/{regionId}', name:'_parent')]
+	public function multipleGet(string $regionId, RegionRepository $regionRepository, DistrictRepository $districtRepository): JsonResponse
+	{
+		if($regionRepository->count(['id' => $regionId]) === 0) {
+			return $this->error("Invalid ID", Response::HTTP_NOT_FOUND, ['id' => $regionId]);
+		}
+
+		$composer = new MultipleDistrictsDataComposer($regionId, $regionRepository, $districtRepository);
+
+		return $this->send($composer->getData());
 	}
 
 	#[Route('/borders/{id}', name: '_borders')]

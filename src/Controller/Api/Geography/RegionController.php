@@ -3,7 +3,9 @@
 namespace App\Controller\Api\Geography;
 
 use App\Controller\BaseApiController;
+use App\Repository\Geography\CountryRepository;
 use App\Repository\Geography\RegionRepository;
+use App\Service\Geojson\Region\MultipleRegionsDataComposer;
 use App\Service\Geojson\Region\RegionBordersDataComposer;
 use App\Service\Geojson\Region\SpecificRegionDataComposer;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -18,7 +20,20 @@ class RegionController extends BaseApiController
 	#[Route('/borders', name: '_borders')]
 	public function allBorders(RegionBordersDataComposer $composer): JsonResponse
 	{
+		$composer->setDebug(true);
 		return $this->handleReturn($composer);
+	}
+
+	#[Route('/parent/{countryId}', name:'_parent')]
+	public function multipleGet(string $countryId, CountryRepository $countryRepository, RegionRepository $regionRepository): JsonResponse
+	{
+		if($countryRepository->count(['id' => $countryId]) === 0) {
+			return $this->error("Invalid ID", Response::HTTP_NOT_FOUND, ['id' => $countryId]);
+		}
+
+		$composer = new MultipleRegionsDataComposer($countryId, $countryRepository, $regionRepository);
+
+		return $this->send($composer->getData());
 	}
 
 	#[Route('/{id}',name: '_get')]

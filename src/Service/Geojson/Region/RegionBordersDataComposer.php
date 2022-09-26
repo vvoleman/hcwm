@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 class RegionBordersDataComposer extends \App\Service\Geojson\AbstractDataComposer
 {
 
-	public const BORDERS_FOLDER = __DIR__.'/../../../../storage/geography/regions';
+	public const BORDERS_FOLDER = __DIR__ . '/../../../../storage/geography/regions';
 
 	private ?string $id = null;
 
@@ -25,7 +25,7 @@ class RegionBordersDataComposer extends \App\Service\Geojson\AbstractDataCompose
 	protected function getFilename(): string
 	{
 		$part = '';
-		if(!!$this->id){
+		if (!!$this->id) {
 			$part = "_{$this->id}";
 		}
 
@@ -62,7 +62,7 @@ class RegionBordersDataComposer extends \App\Service\Geojson\AbstractDataCompose
 
 	private function formatRegion(Region $region): array
 	{
-		$fullPath = self::BORDERS_FOLDER."/{$region->getId()}.json";
+		$fullPath = self::BORDERS_FOLDER . "/{$region->getId()}.json";
 
 		if (!file_exists($fullPath)) {
 			throw new IOException("File '{$fullPath}' not found");
@@ -73,7 +73,14 @@ class RegionBordersDataComposer extends \App\Service\Geojson\AbstractDataCompose
 		return [
 			'type' => 'Feature',
 			'id' => $region->getId(),
-			'properties' => [],
+			'properties' => [
+				'id' => $region->getId(),
+				'name' => $region->getName(),
+				'coords' => [
+					'latitude' => $region->getLatitude(),
+					'longitude' => $region->getLongitude(),
+				]
+			],
 			'geometry' => $data
 		];
 	}

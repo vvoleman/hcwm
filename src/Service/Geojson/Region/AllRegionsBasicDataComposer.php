@@ -32,7 +32,8 @@ class AllRegionsBasicDataComposer extends AbstractDataComposer
 				'id' => $region->getId(),
 				'properties' => [
 					'region_id' => $region->getId(),
-					'name' => $region->getName()
+					'name' => $region->getName(),
+					'parent_id' => $region->getCountry()->getId()
 				],
 			];
 		}

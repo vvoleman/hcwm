@@ -110,6 +110,8 @@ class LoadZoteroItems
         $api->run();
         $data = $api->getBody();
 
+		dd($data);
+
         foreach ($data as $datum) {
             if($datum["data"]["itemType"] == "note") continue;
 
