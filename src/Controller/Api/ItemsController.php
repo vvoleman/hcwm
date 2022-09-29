@@ -19,6 +19,7 @@ use App\Service\Filter\Filter;
 use App\Service\Filter\LanguageFilterModifier;
 use App\Service\Filter\QueryFilterModifier;
 use App\Service\Items\ItemsFinder;
+use App\Service\Zotero\PrepareLanguages;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,8 @@ class ItemsController extends BaseApiController
 			'currentFolder' => false,
 			'query' => false,
 			'categories' => false,
-			'languages' => false
+			'languages' => false,
+			'usedLanguage' => false
 		];
 		try {
 			$params = $this->getParams($required);
@@ -90,7 +92,8 @@ class ItemsController extends BaseApiController
 
 		return new JsonResponse([
 			'items' => $dataItems,
-			'folders' => $dataFolders
+			'folders' => $dataFolders,
+			'breadcrumbs' => $collection?->getBreadcrumbs() ?? []
 		], Response::HTTP_OK);
 	}
 
