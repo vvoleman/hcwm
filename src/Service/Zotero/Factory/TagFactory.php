@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Zotero\Updated\Factory;
+namespace App\Service\Zotero\Factory;
 
 class TagFactory
 {

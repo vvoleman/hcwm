@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Zotero\Updated\DataEntity;
+namespace App\Service\Zotero\DataEntity;
 
 use App\Entity\Language;
 

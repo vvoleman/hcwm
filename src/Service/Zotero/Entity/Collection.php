@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 
-namespace App\Service\Zotero\Updated\Entity;
+namespace App\Service\Zotero\Entity;
 
 use App\Entity\CollectionLanguage;
 use App\Repository\LanguageRepository;
+use App\Service\Zotero\Exception\Entity\DuplicateChildException;
+use App\Service\Zotero\Exception\Entity\InvalidParentException;
 use App\Service\Zotero\PrepareLanguages;
-use App\Service\Zotero\Updated\Exception\Entity\DuplicateChildException;
-use App\Service\Zotero\Updated\Exception\Entity\InvalidParentException;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Collection extends TranslatableZoteroEntity

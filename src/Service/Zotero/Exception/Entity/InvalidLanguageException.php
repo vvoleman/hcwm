@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Zotero\Updated\Exception\Entity;
+namespace App\Service\Zotero\Exception\Entity;
 
 class InvalidLanguageException extends ZoteroEntityException
 {

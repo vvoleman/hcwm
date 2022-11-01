@@ -36,3 +36,19 @@
 [01-Nov-2022 20:35:45 UTC] 2022-11-01T20:35:45+00:00 [critical] Uncaught Error: Call to undefined method App\Service\Zotero\Updated\Entity\Collection::addCollection()
 [01-Nov-2022 20:35:53 UTC] 2022-11-01T20:35:53+00:00 [critical] Uncaught Error: Call to undefined method App\Service\Zotero\Updated\Entity\Collection::addCollection()
 [01-Nov-2022 21:26:38 UTC] 2022-11-01T21:26:38+00:00 [critical] Uncaught Error: DateTime::createFromImmutable(): Argument #1 ($object) must be of type DateTimeImmutable, null given
+[01-Nov-2022 22:14:33 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.1". You are running 8.0.24. in /home/vvoleman/hcwm/hcwm/vendor/composer/platform_check.php on line 24
+[01-Nov-2022 22:14:33 UTC] PHP Stack trace:
+[01-Nov-2022 22:14:33 UTC] PHP   1. {main}() /home/vvoleman/hcwm/hcwm/bin/console:0
+[01-Nov-2022 22:14:33 UTC] PHP   2. require_once() /home/vvoleman/hcwm/hcwm/bin/console:11
+[01-Nov-2022 22:14:33 UTC] PHP   3. require_once() /home/vvoleman/hcwm/hcwm/vendor/autoload_runtime.php:5
+[01-Nov-2022 22:14:33 UTC] PHP   4. ComposerAutoloaderInitcc5c9b7f4106d091254852138e4690b0::getLoader() /home/vvoleman/hcwm/hcwm/vendor/autoload.php:7
+[01-Nov-2022 22:14:33 UTC] PHP   5. require() /home/vvoleman/hcwm/hcwm/vendor/composer/autoload_real.php:25
+[01-Nov-2022 22:14:33 UTC] PHP   6. trigger_error($message = 'Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.1". You are running 8.0.24.', $error_level = 256) /home/vvoleman/hcwm/hcwm/vendor/composer/platform_check.php:24
+[01-Nov-2022 22:14:49 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.1". You are running 8.0.24. in /home/vvoleman/hcwm/hcwm/vendor/composer/platform_check.php on line 24
+[01-Nov-2022 22:14:49 UTC] PHP Stack trace:
+[01-Nov-2022 22:14:49 UTC] PHP   1. {main}() /home/vvoleman/hcwm/hcwm/bin/console:0
+[01-Nov-2022 22:14:49 UTC] PHP   2. require_once() /home/vvoleman/hcwm/hcwm/bin/console:11
+[01-Nov-2022 22:14:49 UTC] PHP   3. require_once() /home/vvoleman/hcwm/hcwm/vendor/autoload_runtime.php:5
+[01-Nov-2022 22:14:49 UTC] PHP   4. ComposerAutoloaderInitcc5c9b7f4106d091254852138e4690b0::getLoader() /home/vvoleman/hcwm/hcwm/vendor/autoload.php:7
+[01-Nov-2022 22:14:49 UTC] PHP   5. require() /home/vvoleman/hcwm/hcwm/vendor/composer/autoload_real.php:25
+[01-Nov-2022 22:14:49 UTC] PHP   6. trigger_error($message = 'Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.1". You are running 8.0.24.', $error_level = 256) /home/vvoleman/hcwm/hcwm/vendor/composer/platform_check.php:24

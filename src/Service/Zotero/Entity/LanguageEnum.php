@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Zotero\Updated\Entity;
+namespace App\Service\Zotero\Entity;
 
 enum LanguageEnum: string
 {

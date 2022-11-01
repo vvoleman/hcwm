@@ -68,7 +68,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "phpunit-unit": "./vendor/bin/phpunit -v --bootstrap vendor/autoload.php --group Unit --testdox --colors=always tests/",
+        "coverage": "./vendor/bin/phpunit --coverage-text -v"
     },
     "conflict": {
         "symfony/symfony": "*"

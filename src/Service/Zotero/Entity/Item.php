@@ -2,14 +2,14 @@
 declare(strict_types=1);
 
 
-namespace App\Service\Zotero\Updated\Entity;
+namespace App\Service\Zotero\Entity;
 
 use App\Entity\ItemLanguage;
 use App\Entity\Language;
 use App\Entity\Tag;
 use App\Repository\LanguageRepository;
+use App\Service\Zotero\Exception\Entity\InvalidLanguageException;
 use App\Service\Zotero\PrepareLanguages;
-use App\Service\Zotero\Updated\Exception\Entity\InvalidLanguageException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -43,7 +43,6 @@ class Item extends TranslatableZoteroEntity
 	public function __construct(
 		string $key,
 		string $title,
-		string $itemType,
 		string $url,
 		array $authors,
 		string $abstractNote,

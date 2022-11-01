@@ -2,12 +2,12 @@
 declare(strict_types=1);
 
 
-namespace App\Service\Zotero\Updated;
+namespace App\Service\Zotero;
 
-use App\Service\Zotero\Updated\DataEntity\RetrievedData;
-use App\Service\Zotero\Updated\Entity\Item;
-use App\Service\Zotero\Updated\Factory\CollectionFactory;
-use App\Service\Zotero\Updated\Factory\ItemFactory;
+use App\Service\Zotero\DataEntity\RetrievedData;
+use App\Service\Zotero\Entity\Item;
+use App\Service\Zotero\Factory\CollectionFactory;
+use App\Service\Zotero\Factory\ItemFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use ZoteroApi\Endpoint\AbstractEndpoint;
 use ZoteroApi\Endpoint\Collections;

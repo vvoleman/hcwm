@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\Zotero\Updated\Factory;
+namespace App\Service\Zotero\Factory;
 
-use App\Service\Zotero\Updated\Entity\Author;
+use App\Service\Zotero\Entity\Author;
 
 class AuthorFactory
 {

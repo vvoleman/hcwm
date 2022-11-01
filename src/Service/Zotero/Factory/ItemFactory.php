@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Zotero\Updated\Factory;
+namespace App\Service\Zotero\Factory;
 
-use App\Service\Zotero\Updated\Entity\Item;
-use App\Service\Zotero\Updated\Entity\LanguageEnum;
+use App\Service\Zotero\Entity\Item;
+use App\Service\Zotero\Entity\LanguageEnum;
 
 class ItemFactory
 {
@@ -18,7 +18,6 @@ class ItemFactory
 		return new Item(
 			$key,
 			$data['title'],
-			$data['itemType'],
 			$data['url'],
 			AuthorFactory::makeMultipleAuthors($data['creators']),
 			$data['abstractNote'],

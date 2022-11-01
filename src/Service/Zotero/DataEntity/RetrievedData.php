@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service\Zotero\Updated\DataEntity;
+namespace App\Service\Zotero\DataEntity;
 
-use App\Service\Zotero\Updated\Entity\Collection;
-use App\Service\Zotero\Updated\Entity\Item;
+use App\Service\Zotero\Entity\Collection;
+use App\Service\Zotero\Entity\Item;
+use App\Service\Zotero\Exception\Entity\ZoteroEntityException;
 
 class RetrievedData
 {
@@ -18,6 +19,11 @@ class RetrievedData
 
 	public function addItem(Item $item): void
 	{
+		$parentKey = $item->getParentKey();
+		if (!isset($this->collections[$parentKey])) {
+			throw new ZoteroEntityException('RetrievedData doesn\'t contain collection with key ' . $parentKey);
+		}
+
 		$this->collections[$item->getParentKey()]->addItem($item);
 	}
 

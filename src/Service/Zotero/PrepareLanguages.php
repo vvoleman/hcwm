@@ -2,11 +2,10 @@
 
 namespace App\Service\Zotero;
 
-use App\Entity\Language;
 use App\Exception\BadLanguageFormatException;
 use App\Exception\LanguageNotFoundException;
 use App\Repository\LanguageRepository;
-use App\Service\Zotero\Updated\DataEntity\TranslationData;
+use App\Service\Zotero\DataEntity\TranslationData;
 
 class PrepareLanguages
 {

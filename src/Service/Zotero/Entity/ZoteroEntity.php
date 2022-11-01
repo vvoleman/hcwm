@@ -3,11 +3,7 @@
 declare(strict_types=1);
 
 
-namespace App\Service\Zotero\Updated\Entity;
-
-use App\Exception\BadLanguageFormatException;
-use App\Service\Zotero\PrepareLanguages;
-use App\Service\Zotero\Updated\Exception\Entity\InvalidParentException;
+namespace App\Service\Zotero\Entity;
 
 abstract class ZoteroEntity implements IDoctrineEntity
 {
