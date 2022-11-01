@@ -27,30 +27,47 @@ class PrepareLanguages
      */
     public function prepare(string $string): array
     {
-        $parts = explode(self::SEPARATOR, $string);
+		$languages = self::parse($string);
 
-        // Single language
-        if (sizeof($parts) == 1) {
-            array_unshift($parts, self::DEFAULT_LANGUAGE);
-        }
+		$dict = [];
 
-        $dict = [];
-        try {
-            for ($i = 0; $i < sizeof($parts) / 2; $i++) {
-                $code = $parts[$i * 2];
-                $lang = $this->languageRepository->find($code);
+		foreach ($languages as $language) {
+			$lang = $this->languageRepository->find($language['code']);
+			if (!$lang) {
+				throw new LanguageNotFoundException(sprintf("Couldn't find language '%s'", $language['code']));
+			}
 
-                // Couldn't find language
-                if (!$lang) {
-                    throw new LanguageNotFoundException(sprintf("Couldn't find language '%s'", $code));
-                }
-
-                $dict[] = ["language" => $lang, "text" => $parts[$i * 2 + 1]];
-            }
-        } catch (\ErrorException $e) {
-            throw new BadLanguageFormatException("Exception during language processing: " . $e->getMessage());
-        }
+			$dict[] = ['language' => $lang, 'text' =>$language['text']];
+		}
 
         return $dict;
     }
+
+	/**
+	 * @param string $string
+	 * @return array<array<string, mixed>>
+	 * @throws BadLanguageFormatException
+	 */
+	public static function parse(string $string): array
+	{
+		$parts = explode(self::SEPARATOR, $string);
+
+		// Single language
+		if (sizeof($parts) == 1) {
+			array_unshift($parts, self::DEFAULT_LANGUAGE);
+		}
+
+		$dict = [];
+		try {
+			for ($i = 0; $i < sizeof($parts) / 2; $i++) {
+				$code = $parts[$i * 2];
+
+				$dict[] = ["language" => $code, "text" => $parts[$i * 2 + 1]];
+			}
+		} catch (\ErrorException $e) {
+			throw new BadLanguageFormatException("Exception during language processing: " . $e->getMessage());
+		}
+
+		return $dict;
+	}
 }

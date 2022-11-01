@@ -21,7 +21,9 @@ trait DistrictFormatTrait
 		return [
 			'type' => 'Feature',
 			'id' => $district->getId(),
-			'properties' => [],
+			'properties' => [
+				'name' => $district->getName(),
+			],
 			'geometry' => $data
 		];
 	}
