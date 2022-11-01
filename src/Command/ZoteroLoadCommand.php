@@ -2,8 +2,11 @@
 
 namespace App\Command;
 
+use App\Exception\BadLanguageFormatException;
 use App\Service\Zotero\LoadZoteroCollections;
 use App\Service\Zotero\LoadZoteroItems;
+use App\Service\Zotero\Updated\Exception\Entity\InvalidLanguageException;
+use App\Service\Zotero\Updated\ZoteroSyncer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,14 +24,11 @@ use ZoteroApi\ZoteroApi;
 class ZoteroLoadCommand extends Command
 {
 
-    private LoadZoteroCollections $loadZoteroCollections;
-    private LoadZoteroItems $loadZoteroItems;
-
-    public function __construct(LoadZoteroCollections $loadZoteroCollections, LoadZoteroItems $loadZoteroItems) {
-        parent::__construct();
-        $this->loadZoteroCollections = $loadZoteroCollections;
-        $this->loadZoteroItems = $loadZoteroItems;
-    }
+   public function __construct(
+		private ZoteroSyncer $zoteroSyncer,
+	) {
+		parent::__construct();
+	}
 
     protected function configure(): void
     {
@@ -44,19 +44,19 @@ class ZoteroLoadCommand extends Command
         $apiKey = $input->getArgument('apiKey');
         $sourceId = $input->getArgument("sourceId");
 
-        $api = new ZoteroApi($apiKey,new UsersSource($sourceId));
+        try {
+			$io->progressStart(1);
+			$this->zoteroSyncer->sync($apiKey, $sourceId);
+			$io->progressAdvance();
 
-        try{
-            $io->progressStart(2);
-            $this->loadZoteroCollections->load($apiKey,new UsersSource($sourceId));
-            $io->progressAdvance(1);
-            $this->loadZoteroItems->loadAllItems($api);
-            $io->progressAdvance(2);
+			$io->success("Zotero data loaded");
+			return Command::SUCCESS;
+		} catch (BadLanguageFormatException|InvalidLanguageException $e) {
+			$io->error($e->getMessage());
         }catch (\Exception $e){
             $io->error(sprintf("Loading failed: %s",$e->getMessage()));
-            return Command::FAILURE;
         }
-        $io->success("Zotero data loaded");
-        return Command::SUCCESS;
+		return Command::FAILURE;
+
     }
 }

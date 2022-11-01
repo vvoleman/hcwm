@@ -5,10 +5,14 @@ declare(strict_types=1);
 
 namespace App\Service\Zotero\Updated\Entity;
 
+use App\Entity\CollectionLanguage;
+use App\Repository\LanguageRepository;
+use App\Service\Zotero\PrepareLanguages;
 use App\Service\Zotero\Updated\Exception\Entity\DuplicateChildException;
 use App\Service\Zotero\Updated\Exception\Entity\InvalidParentException;
+use Doctrine\ORM\EntityManagerInterface;
 
-class Collection extends ZoteroEntity
+class Collection extends TranslatableZoteroEntity
 {
 
 	/** @var ZoteroEntity[] */
@@ -20,7 +24,7 @@ class Collection extends ZoteroEntity
 	 */
 	public function addItem(ZoteroEntity $entity): void
 	{
-		if (ZoteroEntity::isChildOf($this, $entity)) {
+		if (!ZoteroEntity::isChildOf($this, $entity)) {
 			throw new InvalidParentException(
 				sprintf('Entity "%s" is not parent of "%s"', $this->getKey(), $entity->getKey())
 			);
@@ -33,5 +37,47 @@ class Collection extends ZoteroEntity
 		}
 
 		$this->items[$entity->getKey()] = $entity;
+	}
+
+	public function makeDoctrineEntity(EntityManagerInterface $manager): \App\Entity\Collection
+	{
+		$collectionRepository = $manager->getRepository(\App\Entity\Collection::class);
+		$collection = $collectionRepository->find($this->getKey());
+		if ($collection) {
+			$manager->remove($collection);
+			$manager->flush();
+		}
+
+		$collection = new \App\Entity\Collection();
+		$collection->setId($this->getKey());
+
+		/** @var LanguageRepository $languageRepository */
+		$languageRepository = $manager->getRepository(\App\Entity\Language::class);
+
+		$translations = (new PrepareLanguages($languageRepository))->prepare($this->name);
+		foreach ($translations as $translation) {
+			$collectionLanguage = new CollectionLanguage();
+			$collectionLanguage->setCollection($collection);
+			$collectionLanguage->setLanguage($translation->getLanguage());
+			$collectionLanguage->setText($translation->getText());
+
+			$manager->persist($collectionLanguage);
+			$collection->addCollectionsLanguage($collectionLanguage);
+		}
+
+		$manager->persist($collection);
+
+		foreach ($this->items as $item) {
+			$entity = $item->makeDoctrineEntity($manager);
+
+			if ($item instanceof Item) {
+				$collection->addItem($entity);
+			} else {
+				$collection->addSubcollection($entity);
+			}
+		}
+
+		return $collection;
+
 	}
 }

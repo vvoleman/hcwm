@@ -6,6 +6,7 @@ use App\Entity\Language;
 use App\Exception\BadLanguageFormatException;
 use App\Exception\LanguageNotFoundException;
 use App\Repository\LanguageRepository;
+use App\Service\Zotero\Updated\DataEntity\TranslationData;
 
 class PrepareLanguages
 {
@@ -21,7 +22,7 @@ class PrepareLanguages
 
     /**
      * @param string $string
-     * @return array
+     * @return TranslationData[]
      * @throws BadLanguageFormatException
      * @throws LanguageNotFoundException
      */
@@ -32,12 +33,12 @@ class PrepareLanguages
 		$dict = [];
 
 		foreach ($languages as $language) {
-			$lang = $this->languageRepository->find($language['code']);
+			$lang = $this->languageRepository->find($language['language']);
 			if (!$lang) {
 				throw new LanguageNotFoundException(sprintf("Couldn't find language '%s'", $language['code']));
 			}
 
-			$dict[] = ['language' => $lang, 'text' =>$language['text']];
+			$dict[] = new TranslationData($lang, $language['text']);
 		}
 
         return $dict;

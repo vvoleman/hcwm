@@ -28,3 +28,11 @@
 [11-Aug-2022 18:28:33 UTC] 2022-08-11T18:28:33+00:00 [critical] Uncaught Error: App\Controller\Api\Geography\RegionController::get(): Return value must be of type Symfony\Component\HttpFoundation\JsonResponse, array returned
 [12-Aug-2022 08:46:46 UTC] 2022-08-12T08:46:46+00:00 [critical] Uncaught Error: Undefined constant App\Service\Geojson\Region\AllDistrictsBordersRegionDataComposer::BORDERS_FOLDER
 [12-Aug-2022 08:47:05 UTC] 2022-08-12T08:47:05+00:00 [critical] Uncaught Error: Undefined constant App\Service\Geojson\Region\AllDistrictsBordersRegionDataComposer::BORDERS_FOLDER
+[22-Sep-2022 09:39:51 UTC] 2022-09-22T09:39:51+00:00 [critical] Uncaught Error: explode(): Argument #1 ($separator) cannot be empty
+[28-Sep-2022 11:19:30 UTC] 2022-09-28T11:19:30+00:00 [critical] Uncaught Error: Call to undefined method App\Controller\Api\ItemsController::isDirty()
+[28-Sep-2022 11:33:05 UTC] 2022-09-28T11:33:05+00:00 [critical] Uncaught Error: Call to a member function getBreadcrumbs() on null
+[01-Nov-2022 20:16:45 UTC] 2022-11-01T20:16:45+00:00 [critical] Uncaught Error: syntax error, unexpected token "}"
+[01-Nov-2022 20:21:44 UTC] 2022-11-01T20:21:44+00:00 [critical] Uncaught Error: App\Service\Zotero\Updated\Entity\TranslatableZoteroEntity::__construct(): Argument #2 ($key) must be of type string, null given, called in /var/www/html/src/Service/Zotero/Updated/Entity/Item.php on line 50
+[01-Nov-2022 20:35:45 UTC] 2022-11-01T20:35:45+00:00 [critical] Uncaught Error: Call to undefined method App\Service\Zotero\Updated\Entity\Collection::addCollection()
+[01-Nov-2022 20:35:53 UTC] 2022-11-01T20:35:53+00:00 [critical] Uncaught Error: Call to undefined method App\Service\Zotero\Updated\Entity\Collection::addCollection()
+[01-Nov-2022 21:26:38 UTC] 2022-11-01T21:26:38+00:00 [critical] Uncaught Error: DateTime::createFromImmutable(): Argument #1 ($object) must be of type DateTimeImmutable, null given
