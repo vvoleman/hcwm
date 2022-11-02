@@ -9,24 +9,25 @@ use App\Service\Zotero\DataEntity\TranslationData;
 
 class PrepareLanguages
 {
-    public const DEFAULT_LANGUAGE = "cs";
-    public const SEPARATOR = "__";
+	public const DEFAULT_LANGUAGE = "cs";
+	public const SEPARATOR = "__";
 
-    /** @var LanguageRepository  */
-    private LanguageRepository $languageRepository;
+	/** @var LanguageRepository */
+	private LanguageRepository $languageRepository;
 
-    public function __construct(LanguageRepository $languageRepository) {
-        $this->languageRepository = $languageRepository;
-    }
+	public function __construct(LanguageRepository $languageRepository)
+	{
+		$this->languageRepository = $languageRepository;
+	}
 
-    /**
-     * @param string $string
-     * @return TranslationData[]
-     * @throws BadLanguageFormatException
-     * @throws LanguageNotFoundException
-     */
-    public function prepare(string $string): array
-    {
+	/**
+	 * @param string $string
+	 * @return TranslationData[]
+	 * @throws BadLanguageFormatException
+	 * @throws LanguageNotFoundException
+	 */
+	public function prepare(string $string): array
+	{
 		$languages = self::parse($string);
 
 		$dict = [];
@@ -40,8 +41,8 @@ class PrepareLanguages
 			$dict[] = new TranslationData($lang, $language['text']);
 		}
 
-        return $dict;
-    }
+		return $dict;
+	}
 
 	/**
 	 * @param string $string
@@ -61,6 +62,14 @@ class PrepareLanguages
 		try {
 			for ($i = 0; $i < sizeof($parts) / 2; $i++) {
 				$code = $parts[$i * 2];
+				$text = $parts[$i * 2 + 1];
+
+				if(!preg_match('/^[a-z]{2}$/', $code)) {
+					throw new BadLanguageFormatException(sprintf("Language code '%s' is not valid", $code));
+				}
+				if (strlen($text) == 0) {
+					throw new BadLanguageFormatException(sprintf("Language text '%s' is not valid", $text));
+				}
 
 				$dict[] = ["language" => $code, "text" => $parts[$i * 2 + 1]];
 			}

@@ -39,6 +39,14 @@ class Collection extends TranslatableZoteroEntity
 		$this->items[$entity->getKey()] = $entity;
 	}
 
+	/**
+	 * @return ZoteroEntity[]
+	 */
+	public function getItems(): array
+	{
+		return $this->items;
+	}
+
 	public function makeDoctrineEntity(EntityManagerInterface $manager): \App\Entity\Collection
 	{
 		$collectionRepository = $manager->getRepository(\App\Entity\Collection::class);

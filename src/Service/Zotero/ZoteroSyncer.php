@@ -28,7 +28,7 @@ class ZoteroSyncer
 	/**
 	 * @throws \Exception
 	 */
-	public function sync(?string $apiKey, ?string $userId): void
+	public function sync(?string $apiKey = null, ?string $userId = null): void
 	{
 		$apiKey = $apiKey ?? $_ENV['ZOTERO_API_KEY'];
 		$userId= $userId ?? $_ENV['ZOTERO_USER_ID'];
@@ -64,6 +64,9 @@ class ZoteroSyncer
 		}
 
 		$results = $api->setEndpoint($endpoints['items'])->run()->getBody();
+		$first = $results[0];
+		$first = json_encode($first);
+		dd($first);
 		foreach ($results as $result) {
 			if(in_array($result['data']['itemType'], ItemFactory::FORBIDDEN)) {
 				continue;

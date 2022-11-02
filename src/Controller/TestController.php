@@ -15,7 +15,7 @@ class TestController extends AbstractController
 	#[Route('/test/zotero', name: 'test_zotero')]
 	public function index(ZoteroSyncer $syncer)
 	{
-		$syncer->test();
+		$syncer->sync();
 	}
 
 }

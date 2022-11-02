@@ -7,18 +7,24 @@ use App\Service\Zotero\Entity\Collection;
 use App\Service\Zotero\Entity\Item;
 use App\Service\Zotero\Entity\LanguageEnum;
 use App\Service\Zotero\Exception\Entity\ZoteroEntityException;
+use App\Tests\Service\Zotero\ItemTestCase;
 use Iterator;
 use PHPUnit\Framework\TestCase;
 
-class RetrievedDataTest extends TestCase
+class RetrievedDataTest extends ItemTestCase
 {
 
 	/**
 	 * @covers \App\Service\Zotero\DataEntity\RetrievedData::addItem
+	 * @covers \App\Service\Zotero\DataEntity\RetrievedData::addCollection
 	 * @dataProvider addCollectionProvider
 	 */
-	public function testAddItem(RetrievedData $retrievedData, Item $item, bool $isOk): void
+	public function testAddItem(RetrievedData $retrievedData, array $collections, Item $item, bool $isOk): void
 	{
+		foreach ($collections as $collection) {
+			$retrievedData->addCollection($collection);
+		}
+
 		if ($isOk) {
 			$this->expectNotToPerformAssertions();
 		} else {
@@ -31,17 +37,21 @@ class RetrievedDataTest extends TestCase
 	public function addCollectionProvider(): Iterator
 	{
 		$retrievedData = new RetrievedData();
-		$retrievedData->addCollection(new Collection('key1', 'name1', ''));
-		$retrievedData->addCollection(new Collection('key2', 'name2', 'key1'));
+		$collections = [
+			new Collection('key1', 'name1', ''),
+			new Collection('key2', 'name2', 'key1')
+		];
 
 		yield [
 			$retrievedData,
+			$collections,
 			$this->generateItem('key3', 'name3', 'key2'),
 			true,
 		];
 
 		yield [
 			$retrievedData,
+			$collections,
 			$this->generateItem('key4', 'name4', 'key8'),
 			false,
 		];
@@ -70,22 +80,5 @@ class RetrievedDataTest extends TestCase
 
 		yield [$a, 3];
 		yield [$b, 1];
-	}
-
-	private function generateItem(string $key, string $name, string $parentKey): Item
-	{
-		return new Item(
-			$key,
-			$name,
-			'url',
-			[],
-			'',
-			LanguageEnum::CS,
-			[],
-			new \DateTimeImmutable(),
-			new \DateTimeImmutable(),
-			null,
-			$parentKey
-		);
 	}
 }
