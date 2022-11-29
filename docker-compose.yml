@@ -1,5 +1,11 @@
 version: '3.4'
 services:
+  libretranslate:
+    build:
+      context: python_translator
+      target: builder
+    ports:
+        - '5000:5000'
   application:
     build:
       context: .
@@ -7,10 +13,12 @@ services:
     container_name: "hcwm_web"
     depends_on:
       - mysql
+      - libretranslate
     networks:
       - default
     links:
       - mysql
+      - libretranslate
     volumes:
       - .:/var/www/html
       - ~/.ssh:/root/.ssh

@@ -90,11 +90,11 @@ class ItemsController extends BaseApiController
 			return $this->formatFolder($folder);
 		}, $folders);
 
-		return new JsonResponse([
+		return $this->send([
 			'items' => $dataItems,
 			'folders' => $dataFolders,
 			'breadcrumbs' => $collection?->getBreadcrumbs() ?? []
-		], Response::HTTP_OK);
+		]);
 	}
 
 	#[Route('/recent', name: '_recent', methods: ['GET'])]

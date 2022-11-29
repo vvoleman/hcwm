@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class AssetsController extends BaseApiController
 {
 
+
+
 	#[Route('/categories', name: '_categories', methods: ['GET'])]
 	public function getCategories(TagRepository $tagRepository): JsonResponse
 	{

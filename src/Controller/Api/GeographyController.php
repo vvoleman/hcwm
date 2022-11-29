@@ -4,6 +4,9 @@ namespace App\Controller\Api;
 
 use App\Controller\BaseApiController;
 use App\Service\Geojson\Region\AllRegionsBasicDataComposer;
+use App\Service\Statistic\Excel\DataHandler\TrashesByRegionsDataHandler;
+use App\Service\Statistic\Excel\ExcelProcessor;
+use App\Service\Statistic\Excel\Template\TrashesByRegionsTemplate;
 use App\Service\Statistic\FindData;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,31 +21,11 @@ class GeographyController extends BaseApiController
 	}
 
 	#[Route('/test')]
-	public function test()
+	public function test(TrashesByRegionsTemplate $template, TrashesByRegionsDataHandler $dataHandler, ExcelProcessor $processor)
 	{
-		$countries = [
-			'cz' => 'Česká republika'
-		];
-
-		$find = new FindData();
-		$_regions = $find->getRegionsData();
-
-		$regions = [];
-		foreach ($_regions as $region) {
-			$props = $region['properties'];
-			$regions[$props['ISO3166-2']] = [
-				'name' => $props['name'],
-				'latitude' => $props['city']['coords'][1],
-				'longitude' => $props['city']['coords'][0],
-			];
-		}
-
-		return $this->json($regions);
-		$regions = [
-			'cz' => [
-				''
-			]
-		];
+		$processor->setTemplate($template);
+		$processor->setDataHandler($dataHandler);
+		dd($processor->process());
 	}
 
 	#[Route('/districts')]
