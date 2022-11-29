@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\Zotero\LoadZoteroCollections;
+use App\Service\Zotero\UserRetriever;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,13 +22,6 @@ use ZoteroApi\Exceptions\ZoteroEndpointNotFoundException;
 class ZoteroGetUserCommand extends Command
 {
 
-    private LoadZoteroCollections $collections;
-
-    public function __construct(LoadZoteroCollections $collections) {
-        parent::__construct();
-        $this->collections = $collections;
-    }
-
     protected function configure(): void
     {
         $this
@@ -46,7 +39,9 @@ class ZoteroGetUserCommand extends Command
         }
 
         try {
-            $user = $this->collections->getUserByAPI($apiKey);
+			$retriever = new UserRetriever();
+
+            $user = $retriever->getUserByAPI($apiKey);
             $io->success(sprintf("userID: %s",$user->userID));
             return Command::SUCCESS;
         } catch (ZoteroAccessDeniedException $e) {
