@@ -28,8 +28,8 @@ class ZoteroLoadCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('apiKey', InputArgument::REQUIRED, 'API key for Zotero')
-            ->addArgument("sourceId",InputArgument::REQUIRED,"ID of source (group/user)")
+            ->addArgument('apiKey', InputArgument::OPTIONAL, 'API key for Zotero')
+            ->addArgument("sourceId",InputArgument::OPTIONAL,"ID of source (group/user)")
         ;
     }
 
@@ -38,11 +38,9 @@ class ZoteroLoadCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $apiKey = $input->getArgument('apiKey');
         $sourceId = $input->getArgument("sourceId");
-
         try {
-			$io->progressStart(1);
+			$io->info('Starting Zotero sync at ' . date('Y-m-d H:i:s'));
 			$this->zoteroSyncer->sync($apiKey, $sourceId);
-			$io->progressAdvance();
 
 			$io->success("Zotero data loaded");
 			return Command::SUCCESS;

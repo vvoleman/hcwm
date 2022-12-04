@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Zotero;
 
+use App\Service\Util\LoggerTrait;
+use App\Service\Zotero\DataEntity\RecordsPersistedData;
 use App\Service\Zotero\DataEntity\RetrievedData;
 use App\Service\Zotero\Entity\Item;
+use App\Service\Zotero\Entity\ZoteroEntity;
 use App\Service\Zotero\Factory\CollectionFactory;
 use App\Service\Zotero\Factory\ItemFactory;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +20,7 @@ use ZoteroApi\ZoteroApi;
 
 class ZoteroSyncer
 {
+	use LoggerTrait;
 
 	private ZoteroApi $api;
 	private EntityManagerInterface $manager;
@@ -39,11 +43,14 @@ class ZoteroSyncer
 
 		$entities = $this->getAllEntities($apiKey, $userId);
 
+		RecordsPersistedData::addGroup('tags');
+		/** @var ZoteroEntity $entity */
 		foreach ($entities as $entity) {
 			$entity->makeDoctrineEntity($this->manager);
 		}
 
 		$this->manager->flush();
+		$this->getLogger()->info('Zotero sync complete, ' . count($entities) . ' entities persisted (if not already)');
 	}
 
 	protected function getAllEntities(string $apiKey, string $userId): array
@@ -64,9 +71,6 @@ class ZoteroSyncer
 		}
 
 		$results = $api->setEndpoint($endpoints['items'])->run()->getBody();
-		$first = $results[0];
-		$first = json_encode($first);
-		dd($first);
 		foreach ($results as $result) {
 			if(in_array($result['data']['itemType'], ItemFactory::FORBIDDEN)) {
 				continue;

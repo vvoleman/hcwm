@@ -1,1 +1,72 @@
-{"CZ-10":{"name":"Hlavn\u00ed m\u011bsto Praha","latitude":50.0596654,"longitude":14.4656111},"CZ-64":{"name":"Jihomoravsk\u00fd kraj","latitude":49.1248979,"longitude":16.5946806},"CZ-41":{"name":"Karlovarsk\u00fd kraj","latitude":50.1753496,"longitude":12.6961646},"CZ-31":{"name":"Jiho\u010desk\u00fd kraj","latitude":49.0864602,"longitude":14.5700852},"CZ-20":{"name":"St\u0159edo\u010desk\u00fd kraj","latitude":50.0601476,"longitude":14.4659588},"CZ-72":{"name":"Zl\u00ednsk\u00fd kraj","latitude":49.19695,"longitude":17.7626317},"CZ-42":{"name":"\u00dasteck\u00fd kraj","latitude":50.5663256,"longitude":13.7966001},"CZ-63":{"name":"Kraj Vyso\u010dina","latitude":49.3994046,"longitude":15.6532419},"CZ-51":{"name":"Libereck\u00fd kraj","latitude":50.7475604,"longitude":14.9876249},"CZ-71":{"name":"Olomouck\u00fd kraj","latitude":49.8591215,"longitude":17.3150497},"CZ-53":{"name":"Pardubick\u00fd kraj","latitude":49.8898842,"longitude":16.1151024},"CZ-80":{"name":"Moravskoslezsk\u00fd kraj","latitude":49.8602829,"longitude":18.0028909},"CZ-52":{"name":"Kr\u00e1lov\u00e9hradeck\u00fd kraj","latitude":50.4094091,"longitude":15.844874},"CZ-32":{"name":"Plze\u0148sk\u00fd kraj","latitude":49.522842,"longitude":13.1204268}}
+{
+	"CZ-10": {
+		"name": "Hlavn\u00ed m\u011bsto Praha",
+		"latitude": 50.0596654,
+		"longitude": 14.4656111
+	},
+	"CZ-64": {
+		"name": "Jihomoravsk\u00fd kraj",
+		"latitude": 49.1248979,
+		"longitude": 16.5946806
+	},
+	"CZ-41": {
+		"name": "Karlovarsk\u00fd kraj",
+		"latitude": 50.1753496,
+		"longitude": 12.6961646
+	},
+	"CZ-31": {
+		"name": "Jiho\u010desk\u00fd kraj",
+		"latitude": 49.0864602,
+		"longitude": 14.5700852
+	},
+	"CZ-20": {
+		"name": "St\u0159edo\u010desk\u00fd kraj",
+		"latitude": 50.03586612031983,
+		"longitude": 15.025354069722235
+	},
+	"CZ-72": {
+		"name": "Zl\u00ednsk\u00fd kraj",
+		"latitude": 49.19695,
+		"longitude": 17.7626317
+	},
+	"CZ-42": {
+		"name": "\u00dasteck\u00fd kraj",
+		"latitude": 50.5663256,
+		"longitude": 13.7966001
+	},
+	"CZ-63": {
+		"name": "Kraj Vyso\u010dina",
+		"latitude": 49.3994046,
+		"longitude": 15.6532419
+	},
+	"CZ-51": {
+		"name": "Libereck\u00fd kraj",
+		"latitude": 50.7475604,
+		"longitude": 14.9876249
+	},
+	"CZ-71": {
+		"name": "Olomouck\u00fd kraj",
+		"latitude": 49.8591215,
+		"longitude": 17.3150497
+	},
+	"CZ-53": {
+		"name": "Pardubick\u00fd kraj",
+		"latitude": 49.8898842,
+		"longitude": 16.1151024
+	},
+	"CZ-80": {
+		"name": "Moravskoslezsk\u00fd kraj",
+		"latitude": 49.8602829,
+		"longitude": 18.0028909
+	},
+	"CZ-52": {
+		"name": "Kr\u00e1lov\u00e9hradeck\u00fd kraj",
+		"latitude": 50.4094091,
+		"longitude": 15.844874
+	},
+	"CZ-32": {
+		"name": "Plze\u0148sk\u00fd kraj",
+		"latitude": 49.522842,
+		"longitude": 13.1204268
+	}
+}

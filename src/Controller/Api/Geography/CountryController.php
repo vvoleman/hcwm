@@ -5,6 +5,7 @@ namespace App\Controller\Api\Geography;
 use App\Controller\BaseApiController;
 use App\Repository\Geography\CountryRepository;
 use App\Service\Geojson\Country\AllCountriesBasicDataComposer;
+use App\Service\Geojson\Country\CountryBorderDataComposer;
 use App\Service\Geojson\Country\SpecificCountryDataComposer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,18 @@ class CountryController extends BaseApiController
 		$composer->setDebug($isDebug);
 		$data = $composer->getData();
 		return $this->send($data);
+	}
+
+	#[Route('/{id}/borders', name: '_borders')]
+	public function borders(string $id, CountryRepository $repository): JsonResponse
+	{
+		if($repository->count(['id' => $id]) === 0) {
+			return $this->error("Invalid ID", Response::HTTP_NOT_FOUND, ['id' => $id]);
+		}
+
+		$composer = new CountryBorderDataComposer($repository, $id);
+
+		return $this->send($composer->getData());
 	}
 
 }

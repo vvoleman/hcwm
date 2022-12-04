@@ -57,3 +57,4 @@
 [02-Nov-2022 18:10:31 UTC] 2022-11-02T18:10:31+00:00 [critical] Uncaught Error: Too few arguments to function App\Service\Zotero\ZoteroSyncer::sync(), 0 passed in /var/www/html/src/Controller/TestController.php on line 18 and exactly 2 expected
 [02-Nov-2022 18:10:52 UTC] 2022-11-02T18:10:52+00:00 [info] User Deprecated: The "Symfony\Bridge\Doctrine\Logger\DbalLogger" class implements "Doctrine\DBAL\Logging\SQLLogger" that is deprecated Use {@see \Doctrine\DBAL\Logging\Middleware} or implement {@see \Doctrine\DBAL\Driver\Middleware} instead.
 [02-Nov-2022 18:10:52 UTC] 2022-11-02T18:10:52+00:00 [critical] Uncaught Error: json_decode(): Argument #1 ($json) must be of type string, array given
+[30-Nov-2022 11:38:42 UTC] 2022-11-30T11:38:42+00:00 [critical] Uncaught Error: syntax error, unexpected identifier "LanguageEnum"

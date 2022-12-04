@@ -15,13 +15,16 @@ class ItemFactory
 		$isDate = isset($data['date']);
 		$key = $data['key'];
 		$data = $data['data'];
+		$data = self::validateRequiredFields($data, ['title', 'url', 'abstractNote', 'language']);
+		$language = self::prepareLanguage($data);
+
 		return new Item(
 			$key,
 			$data['title'],
 			$data['url'],
 			AuthorFactory::makeMultipleAuthors($data['creators']),
 			$data['abstractNote'],
-			LanguageEnum::from($data['language']),
+			$language,
 			TagFactory::makeMultipleTags($data['tags']),
 			new \DateTimeImmutable($data['dateAdded']),
 			new \DateTimeImmutable($data['dateModified']),
@@ -38,6 +41,32 @@ class ItemFactory
 		}
 
 		return $items;
+	}
+
+	private static function prepareLanguage(array $data): LanguageEnum
+	{
+		if (!isset($data['language']) || $data['language'] === '' || $data['language'] === null) {
+			echo "* Language is not set for item {$data['key']} ({$data['title']}), setting to default (Czech)\n";
+			$language = 'cs';
+		} else if (LanguageEnum::tryFrom($data['language']) === null) {
+			echo "* Language {$data['language']} is not supported for item {$data['key']} ({$data['title']}), setting to default (Czech)\n";
+			$language = 'cs';
+		} else {
+			$language = $data['language'];
+		}
+
+		return LanguageEnum::from($language);
+	}
+
+	private static function validateRequiredFields(array $data, array $fields): array
+	{
+		foreach ($fields as $field) {
+			if (!isset($data[$field]) || $data[$field] === '' || $data[$field] === null) {
+				throw new \InvalidArgumentException("Field {$field} is required in item {$data['key']} ({$data['title']})");
+			}
+		}
+
+		return $data;
 	}
 
 }

@@ -8,6 +8,7 @@ use App\Entity\ItemLanguage;
 use App\Entity\Language;
 use App\Entity\Tag;
 use App\Repository\LanguageRepository;
+use App\Service\Zotero\DataEntity\RecordsPersistedData;
 use App\Service\Zotero\Exception\Entity\InvalidLanguageException;
 use App\Service\Zotero\PrepareLanguages;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -96,9 +97,16 @@ class Item extends TranslatableZoteroEntity
 			$tag = $tagRepository->findOneBy(['text' => $text]);
 
 			if (!$tag) {
-				$tag = new Tag();
-				$tag->setText($text);
-				$manager->persist($tag);
+				if (!RecordsPersistedData::doesValueExist('tags', $text)) {
+					dump('Tag not found: ' . $text);
+					$tag = new Tag();
+					$tag->setText($text);
+					$manager->persist($tag);
+					RecordsPersistedData::addRecord('tags', $text, $tag);
+				} else {
+					dump('Tag found: ' . $text);
+					$tag = RecordsPersistedData::getRecord('tags', $text);
+				}
 			}
 
 			$tags[] = $tag;
@@ -129,9 +137,7 @@ class Item extends TranslatableZoteroEntity
 		$item->setItemsLanguages($itemLanguages);
 
 		$manager->persist($item);
-
 		return $item;
 	}
-
 
 }
