@@ -1,5 +1,22 @@
 version: '3.4'
 services:
+  frontend:
+    build:
+      context: ../hcwm_front
+      dockerfile: docker/Dockerfile
+    container_name: "hcwm_web_front"
+    depends_on:
+      - application
+    networks:
+      - default
+    links:
+      - application
+    volumes:
+      - .:/var/www/html
+      - ~/.ssh:/root/.ssh
+    ports:
+      - "8080:8080"
+
   libretranslate:
     build:
       context: python_translator
@@ -10,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    container_name: "hcwm_web"
+    container_name: "hcwm_web_back"
     depends_on:
       - mysql
       - libretranslate

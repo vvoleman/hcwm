@@ -46,7 +46,7 @@ class BaseApiController extends AbstractController
 			"status"=>"error",
 			"message"=>$message,
 			"context"=>$context
-		]);
+		], $code);
 	}
 
 	protected function send(array $data, int $code = Response::HTTP_OK): JsonResponse
