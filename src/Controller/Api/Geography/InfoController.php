@@ -17,7 +17,9 @@ class InfoController extends BaseApiController
 	{
 		$filtered = TrashRecordContainer::filterTypes($repository->findAll());
 
-		$results = ['allowed'=>[],'others'=>[]];
+		$colors = $this->getColors();
+
+		$results = ['allowed'=>[],'others'=>[], 'colors' => $colors];
 
 		foreach ($filtered as $key => $arr) {
 			foreach ($arr as $item) {
@@ -26,6 +28,19 @@ class InfoController extends BaseApiController
 		}
 
 		return $this->send($results);
+	}
+
+	private function getColors(): array
+	{
+		$name = __DIR__.'/../../../../storage/statistic/colors.json';
+
+		if (!file_exists($name)) {
+			return [];
+		}
+
+		$file = file_get_contents($name);
+
+		return json_decode($file, true);
 	}
 
 }

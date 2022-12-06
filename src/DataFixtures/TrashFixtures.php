@@ -18,13 +18,9 @@ class TrashFixtures extends Fixture
 	public function load(ObjectManager $manager): void
 	{
 		$types = $this->makeTypes($manager);
-		dump("Types");
 		$this->makeDistrictTrash($manager, $types);
-		dump("District");
 		$this->makeRegionTrash($manager, $types);
-		dump("Region");
 		$this->makeCountryTrash($manager, $types);
-		dump("Country");
 		$manager->flush();
 	}
 

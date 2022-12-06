@@ -113,18 +113,7 @@ class ItemsController extends BaseApiController
 				];
 			})->toArray();
 
-			return [
-				'id' => $item->getId(),
-				'title' => $titles,
-				'abstract' => $item->getAbstract(),
-				'url' => $item->getUrl(),
-				'categories' => array_map(function($tag){
-					return [
-						'id' => $tag->getId(),
-						'text' => $tag->getText()
-					];
-				},$item->getTags())
-			];
+			return $this->formatItem($item);
 		}, $items);
 
 		return $this->send($items);
@@ -148,7 +137,8 @@ class ItemsController extends BaseApiController
 					'id' => $tag->getId(),
 					'text' => $tag->getText()
 				];
-			}, $item->getTags())
+			}, $item->getTags()),
+			'dateAdded' => $item->getDateAdded()->format('Y-m-d'),
 		];
 	}
 
