@@ -83,8 +83,8 @@ RUN crontab /etc/cron.d/crontab
 RUN touch /var/log/cron.log
 
 # Create required directories
-RUN mkdir -p /var/www/html/var/log /var/www/html/var/storage/geography/composed /var/www/html/var/storage/statistic/generated
-RUN chmod -R 777 /var/www/html/var/log /var/www/html/var/storage/geography/composed /var/www/html/var/storage/statistic/generated
+RUN mkdir -p /var/www/html/log /var/www/html/var/log /var/www/html/var/storage/geography/composed /var/www/html/var/storage/statistic/generated
+RUN chmod -R 777 /var/www/html/log /var/www/html/var/log /var/www/html/var/storage/geography/composed /var/www/html/var/storage/statistic/generated
 
 COPY  ${project_root}/docker/conf/000-default.conf /etc/apache2/sites-enabled/
 RUN a2enmod rewrite
