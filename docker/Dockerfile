@@ -98,7 +98,7 @@ CMD cron && /usr/sbin/apache2ctl -D FOREGROUND
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Composer install
-COPY composer.json composer.lock ./
+COPY composer.json ./
 RUN composer install --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
 
 # Install composer
