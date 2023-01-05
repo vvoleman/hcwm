@@ -93,6 +93,14 @@ RUN a2enmod rewrite
 RUN a2enmod headers
 
 CMD cron && /usr/sbin/apache2ctl -D FOREGROUND
+
+# COPY composer.phar
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Composer install
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+
 # Install composer
 #RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
