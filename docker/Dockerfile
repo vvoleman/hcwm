@@ -99,7 +99,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Composer install
 COPY composer.json ./
-RUN composer install --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+RUN composer install --no-interaction --no-progress --no-scripts --optimize-autoloader
 
 # Doctrine migrations
 #RUN php bin/console doctrine:migrations:migrate --no-interaction
