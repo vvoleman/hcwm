@@ -71,7 +71,7 @@
 FROM php:8.1.1-apache
 
 RUN apt-get update
-RUN apt-get install -y libzip-dev zip cron libpng-dev libwebp-dev libjpeg-dev freetype2
+RUN apt-get install -y libzip-dev zip cron libpng-dev libwebp-dev libjpeg-dev libfreetype6-dev
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 RUN docker-php-ext-install gd
