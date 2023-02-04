@@ -32,14 +32,12 @@ class CountryBorderDataComposer extends \App\Service\Geojson\AbstractDataCompose
 	{
 		$country = $this->countryRepository->find($this->id);
 
-		$fullPath = self::BORDERS_FOLDER . "/{$country->getId()}.json";
-
+		$fullPath = self::BORDERS_FOLDER . "/{$country->getId()}.geojson";
 		if (!file_exists($fullPath)) {
 			throw new IOException("File '{$fullPath}' not found");
 		}
 
 		$data = json_decode(file_get_contents($fullPath), true);
-
 		return [
 			'type' => 'Feature',
 			'id' => $country->getId(),
@@ -47,7 +45,7 @@ class CountryBorderDataComposer extends \App\Service\Geojson\AbstractDataCompose
 				'id' => $country->getId(),
 				'name' => $country->getName()
 			],
-			'geometry' => $data
+			'geometry' => $data['features'][0]['geometry']
 		];
 	}
 }

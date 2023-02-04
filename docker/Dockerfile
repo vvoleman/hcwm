@@ -102,8 +102,5 @@ COPY composer.json ./
 RUN composer install --no-interaction --no-progress --no-scripts --optimize-autoloader
 
 # Doctrine migrations
-#RUN php bin/console doctrine:migrations:migrate --no-interaction
-#
-#RUN php bin/console doctrine:fixtures:load --no-interaction
-#
-#RUN php bin/console app:zotero:load --no-interaction
+
+ENTRYPOINT ./docker/entrypoint.sh
