@@ -8,8 +8,10 @@ namespace App\Controller\Api;
 use App\Controller\BaseApiController;
 use App\Repository\Geography\CountryRepository;
 use App\Repository\Geography\RegionRepository;
+use App\Service\Statistic\Excel\DataHandler\TrashesByGeographyDataHandler;
 use App\Service\Statistic\Excel\DataHandler\TrashesByRegionsDataHandler;
 use App\Service\Statistic\Excel\ExcelProcessor;
+use App\Service\Statistic\Excel\Template\TrashesByGeographyTemplate;
 use App\Service\Statistic\Excel\Template\TrashesByRegionsTemplate;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use Symfony\Component\Finder\Finder;
@@ -21,7 +23,7 @@ class SpreadsheetController extends BaseApiController
 {
 
 	#[Route('/trashByRegions/{type}/{countryId}/{year}', name: '')]
-	public function get(
+	public function trashByRegions(
 		string $type,
 		string $countryId,
 		int $year,
@@ -33,6 +35,31 @@ class SpreadsheetController extends BaseApiController
 		$dataHandler->setId($countryId);
 		$dataHandler->setYear($year);
 		$template->setYear($year);
+
+		$processor->setDataHandler($dataHandler);
+		$processor->setTemplate($template);
+
+		try {
+			$file = $processor->process();
+		} catch (Exception $e) {
+			return $this->error('Unable to generate spreadsheet', 500);
+		}
+
+		// get splfileinfo object
+		$fileObj = new \SplFileInfo($file);
+		return new BinaryFileResponse($fileObj);
+	}
+
+	#[Route('/trashByGeography/{type}/{id}', name: '')]
+	public function trashByGeography(
+		string $type,
+		string $id,
+		TrashesByGeographyTemplate $template,
+		TrashesByGeographyDataHandler $dataHandler,
+		ExcelProcessor $processor
+	) {
+		$dataHandler->setType($type);
+		$dataHandler->setId($id);
 
 		$processor->setDataHandler($dataHandler);
 		$processor->setTemplate($template);
