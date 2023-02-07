@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpreadsheetController extends BaseApiController
 {
 
-	#[Route('/trashByRegions/{type}/{countryId}/{year}', name: '')]
+	#[Route('/trashByRegions/{type}/{countryId}/{year}', name: '_regions')]
 	public function trashByRegions(
 		string $type,
 		string $countryId,
@@ -50,7 +50,7 @@ class SpreadsheetController extends BaseApiController
 		return new BinaryFileResponse($fileObj);
 	}
 
-	#[Route('/trashByGeography/{type}/{id}', name: '')]
+	#[Route('/trashByGeography/{type}/{id}', name: '_geography')]
 	public function trashByGeography(
 		string $type,
 		string $id,
