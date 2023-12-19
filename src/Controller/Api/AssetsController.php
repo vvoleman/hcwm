@@ -34,7 +34,7 @@ class AssetsController extends BaseApiController
 	public function getImage(string $path): Response {
 		// Search for the file in the public directory
 		$publicDirectory = $this->getParameter('kernel.project_dir') . '/public/';
-		$filePath = $publicDirectory . $path;
+		$filePath = $publicDirectory .'/assets/images/'. $path;
 
 		// Check if file exists
 		if (!file_exists($filePath)) {
