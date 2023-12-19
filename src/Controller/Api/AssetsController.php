@@ -15,8 +15,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class AssetsController extends BaseApiController
 {
 
-
-
 	#[Route('/categories', name: '_categories', methods: ['GET'])]
 	public function getCategories(TagRepository $tagRepository): JsonResponse
 	{
@@ -33,13 +31,13 @@ class AssetsController extends BaseApiController
 	#[Route('/languages', name: '_languages', methods: ['GET'])]
 	public function getLanguages(LanguageRepository $languageRepository): JsonResponse
 	{
-		$url = $this->generateUrl('app', [], UrlGeneratorInterface::ABSOLUTE_URL);
-		$languages = array_map(function ($language) use($url){
+		$baseUrl = $_ENV['APP_URL'] ?? '';
+		$languages = array_map(function ($language) use($baseUrl){
 			/** @var Language $language */
 			return [
 				'code' => $language->getCode(),
 				'name' => $language->getName(),
-				'flag' => sprintf('%s%s',$url, $language->getFlag())
+				'flag' => sprintf('%s/%s',$baseUrl, $language->getFlag())
 			];
 
 		}, $languageRepository->findAll());
