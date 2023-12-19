@@ -33,8 +33,8 @@ class AssetsController extends BaseApiController
 	#[Route('/images/{path}', name: '_images', requirements: ['path' => '.+'], methods: ['GET'])]
 	public function getImage(string $path): Response {
 		// Search for the file in the public directory
-		$publicDirectory = $this->getParameter('kernel.project_dir') . '/public';
-		$filePath = $publicDirectory . '/images/' . $path;
+		$publicDirectory = $this->getParameter('kernel.project_dir') . '/public/';
+		$filePath = $publicDirectory . $path;
 
 		// Check if file exists
 		if (!file_exists($filePath)) {

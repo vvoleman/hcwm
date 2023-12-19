@@ -11,9 +11,9 @@ class LanguageFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $languages = [
-            ["cs","images/flags/cs/width_40.png","čeština"],
-            ["en","images/flags/en/width_40.png","english"],
-            ["de","images/flags/de/width_40.png","deutsch"],
+            ["cs","assets/images/flags/cs/width_40.png","čeština"],
+            ["en","assets/images/flags/en/width_40.png","english"],
+            ["de","assets/images/flags/de/width_40.png","deutsch"],
         ];
 
         foreach ($languages as $lang){
