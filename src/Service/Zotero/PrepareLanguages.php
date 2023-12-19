@@ -35,7 +35,7 @@ class PrepareLanguages
 		foreach ($languages as $language) {
 			$lang = $this->languageRepository->find($language['language']);
 			if (!$lang) {
-				throw new LanguageNotFoundException(sprintf("Couldn't find language '%s'", $language['code']));
+				throw new LanguageNotFoundException(sprintf("Couldn't find language '%s'", $language['language']));
 			}
 
 			$dict[] = new TranslationData($lang, $language['text']);
