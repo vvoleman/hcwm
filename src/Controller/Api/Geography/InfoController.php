@@ -8,7 +8,7 @@ use App\Repository\Geography\Trash\TrashTypeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/info/trashes', name: 'api_info_trashes')]
+#[Route('/info/trashes', name: 'api_info_trashes')]
 class InfoController extends BaseApiController
 {
 

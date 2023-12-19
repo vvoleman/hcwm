@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TranslatorController extends BaseApiController
 {
 
-	#[Route("/api/translate",name:"api_translate_get",methods: ["GET"])]
+	#[Route("/translate",name:"api_translate_get",methods: ["GET"])]
 	public function post(Translator $translator, ItemRepository $itemRepository, LanguageRepository $languageRepository){
 		$required = ['item'=>true,'language'=>true];
 

@@ -6,10 +6,18 @@ namespace App\Controller;
 
 use App\Exception\MissingParameterException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BaseApiController extends AbstractController
@@ -42,11 +50,7 @@ class BaseApiController extends AbstractController
 
 	protected function error(string $message, int $code = Response::HTTP_BAD_REQUEST, array $context = []): JsonResponse
 	{
-		return new JsonResponse([
-			"status"=>"error",
-			"message"=>$message,
-			"context"=>$context
-		], $code);
+		throw new HttpException($code, $message, null, $context, $code);
 	}
 
 	protected function send(array $data, int $code = Response::HTTP_OK): JsonResponse

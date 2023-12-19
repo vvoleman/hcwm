@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use ZoteroApi\Source\UsersSource;
 
-#[Route('/api/statistic',name:'api_statistic')]
+#[Route('/statistic',name:'api_statistic')]
 class StatisticController extends BaseApiController
 {
 

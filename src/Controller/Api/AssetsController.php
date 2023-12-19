@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/api/assets', name: 'api_assets')]
+#[Route('/assets', name: 'api_assets')]
 class AssetsController extends BaseApiController
 {
 

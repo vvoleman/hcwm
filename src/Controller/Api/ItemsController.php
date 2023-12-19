@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/items', name: 'api_items')]
+#[Route('/items', name: 'api_items')]
 class ItemsController extends BaseApiController
 {
 

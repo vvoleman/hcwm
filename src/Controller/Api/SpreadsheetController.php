@@ -18,7 +18,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/spreadsheet', name: 'api_spreadsheet', methods: ['GET'])]
+#[Route('/spreadsheet', name: 'api_spreadsheet', methods: ['GET'])]
 class SpreadsheetController extends BaseApiController
 {
 

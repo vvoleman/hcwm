@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/geography/district', name: 'api_geography_district')]
+#[Route('/geography/district', name: 'api_geography_district')]
 class DistrictController extends BaseApiController
 {
 
