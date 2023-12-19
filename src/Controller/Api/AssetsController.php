@@ -8,6 +8,8 @@ use App\Repository\LanguageRepository;
 use App\Repository\TagRepository;
 use App\Service\Statistic\FindData;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -26,6 +28,21 @@ class AssetsController extends BaseApiController
 		}, $tagRepository->findAll());
 
 		return $this->send($tags);
+	}
+
+	#[Route('/images/{path}', name: '_images', requirements: ['path' => '.+'], methods: ['GET'])]
+	public function getImage(string $path): Response {
+		// Search for the file in the public directory
+		$publicDirectory = $this->getParameter('kernel.project_dir') . '/public';
+		$filePath = $publicDirectory . '/images/' . $path;
+
+		// Check if file exists
+		if (!file_exists($filePath)) {
+			throw new HttpException(Response::HTTP_NOT_FOUND, sprintf('File %s not found', $path));
+		}
+
+		// Return image as file response
+		return $this->file($filePath);
 	}
 
 	#[Route('/languages', name: '_languages', methods: ['GET'])]
