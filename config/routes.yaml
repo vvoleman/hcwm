@@ -1,5 +1,7 @@
 controllers:
     resource: ../src/Controller/
+    # USE .ENV APP_PREFIX
+    prefix: '%route_prefix%'
     type: annotation
 
 kernel:
